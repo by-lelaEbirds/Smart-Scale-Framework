@@ -15,21 +15,24 @@
     <header class="main-header">
         <div class="logo">
             <span class="material-symbols-outlined">insights</span>
-            <h1>DataSpark Solutions</h1>
+            <h1>DataSpark</h1>
         </div>
-        <p>Apresentando nossa plataforma de Inteligência de Varejo para o setor de Supermercados.</p>
+        <p>Retail Intelligence Platform</p>
     </header>
 
     <main class="demonstration-container">
 
-        <section class="column-mvp">
-            <h2 class="column-title">App do Consumidor: "Cesta Certa"</h2>
+        <section class="column-mvp initial-hidden" id="phone-column">
+            <h2 class="column-title">Consumer App: "Cesta Certa"</h2>
             <div class="iphone-mockup">
                 <div class="iphone-body">
                     <div class="iphone-screen-content">
                         <div class="dynamic-island-notch">
                             <div id="dynamic-island" class="dynamic-island">
-                                <div class="island-content"></div>
+                                <div class="island-content-wrapper">
+                                    <div class="island-content-main"></div>
+                                    <div class="island-content-expanded"></div>
+                                </div>
                             </div>
                         </div>
                         
@@ -50,7 +53,7 @@
                                     <div class="card-highlight">
                                         <div class="card-text">
                                             <span class="card-category">Sua Cesta Inteligente</span>
-                                            <h3>Itens que talvez você esteja esquecendo</h3>
+                                            <h3>Itens que talvez você esqueceu</h3>
                                         </div>
                                          <span class="material-symbols-outlined card-icon">shopping_basket</span>
                                     </div>
@@ -74,8 +77,8 @@
             </div>
         </section>
 
-        <section class="column-mvp">
-            <h2 class="column-title">Nossa Plataforma B2B (DataSpark)</h2>
+        <section class="column-mvp initial-hidden" id="dashboard-column">
+            <h2 class="column-title">DataSpark B2B Platform</h2>
             <div class="macos-window">
                 <div class="title-bar">
                     <div class="traffic-lights">
@@ -122,10 +125,12 @@
 
     </main>
     
-    <footer class="main-footer">
-        <button id="simular-btn">▶️ Iniciar Simulação (Jornada do Cliente)</button>
+    <footer class="main-footer initial-hidden" id="footer">
+        <button id="simular-btn">▶ Iniciar Simulação</button>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
     <script src="script.js"></script>
 </body>
 </html>
