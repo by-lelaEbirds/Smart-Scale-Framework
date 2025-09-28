@@ -1,41 +1,39 @@
-/* --- Apple-Inspired Design System --- */
+/* --- Hi-Tech Dark Mode Design System --- */
 :root {
-    --blue-accent: #007aff;
-    --green-accent: #34c759;
-    --orange-accent: #ff9500;
-    --red-accent: #ff3b30;
+    --blue-glow: #007aff;
+    --green-glow: #34c759;
+    --orange-glow: #ff9500;
+    --red-glow: #ff3b30;
     
-    --bg-light: #f5f5f7;
-    --bg-dark-gray: #1d1d1f;
-    --bg-macos-window: rgba(242, 242, 247, 0.95);
+    --bg-primary: #101012;
+    --bg-secondary: #1d1d1f;
+    --bg-macos-window: rgba(35, 35, 38, 0.7);
 
-    --text-primary: #1d1d1f;
-    --text-secondary: #6e6e73;
+    --text-primary: #f5f5f7;
+    --text-secondary: #8e8e93;
     
-    --border-light: rgba(0, 0, 0, 0.1);
-    --shadow-soft: 0 4px 12px rgba(0,0,0,0.08);
-    --shadow-medium: 0 8px 28px rgba(0,0,0,0.12);
+    --border-color: rgba(90, 90, 95, 0.5);
+    --shadow-glow-blue: 0 0 20px rgba(0, 122, 255, 0.3);
     
-    --radius-l: 24px;
-    --radius-m: 16px;
-    --radius-s: 12px;
+    --radius-l: 24px; --radius-m: 16px; --radius-s: 12px;
 }
 
 /* --- Base & Typography --- */
 * { box-sizing: border-box; }
 body {
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    background-color: var(--bg-light);
+    font-family: 'Inter', -apple-system, sans-serif;
+    background-color: var(--bg-primary);
     color: var(--text-primary);
     margin: 0;
+    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 /* --- Layout Principal --- */
 .main-header { padding: 20px 40px; }
-.logo { display: flex; align-items: center; gap: 12px; color: var(--text-primary); }
-.logo .material-symbols-outlined { font-size: 2.5rem; color: var(--blue-accent); }
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo .material-symbols-outlined { font-size: 2.5rem; color: var(--blue-glow); }
 .main-header h1 { font-size: 1.8rem; margin: 0; font-weight: 600; }
 .main-header p { margin: 5px 0 0; color: var(--text-secondary); }
 
@@ -44,107 +42,110 @@ body {
 
 /* --- iPhone Mockup --- */
 .iphone-mockup {
-    width: 380px; height: 780px; background-color: #f5f5f7; border: 12px solid var(--bg-dark-gray);
-    border-radius: 60px; box-shadow: var(--shadow-medium); position: relative;
-    transition: transform 0.3s ease;
+    width: 380px; height: 780px; background-color: var(--bg-secondary); border: 12px solid #000;
+    border-radius: 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative;
+    transition: transform 0.5s ease;
 }
-.iphone-mockup:hover { transform: scale(1.02); }
-.iphone-body { width: 100%; height: 100%; background-image: url('https://i.imgur.com/BFUy3XF.jpeg'); background-size: cover; border-radius: 48px; overflow: hidden; }
+.iphone-mockup:hover { transform: scale(1.02) translateY(-5px); }
+.iphone-body {
+    width: 100%; height: 100%;
+    /* --- NOVO WALLPAPER SVG EMBUTIDO --- */
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 800'%3e%3cdefs%3e%3cfilter id='a' x='-20%25' y='-20%25' width='140%25' height='140%25' filterUnits='objectBoundingBox' primitiveUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3e%3cfeGaussianBlur stdDeviation='50' x='0%25' y='0%25' width='100%25' height='100%25' in='SourceGraphic' edgeMode='none' result='blur'%3e%3c/feGaussianBlur%3e%3c/filter%3e%3clinearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='600' x2='400' y2='100'%3e%3cstop stop-color='%23007AFF'%3e%3c/stop%3e%3cstop offset='1' stop-color='%2334C759'%3e%3c/stop%3e%3c/linearGradient%3e%3c/defs%3e%3cg filter='url(%23a)'%3e%3crect width='800' height='800' fill='%23101012'%3e%3c/rect%3e%3cellipse cx='400' cy='400' rx='200' ry='250' fill='url(%23b)'%3e%3c/ellipse%3e%3c/g%3e%3c/svg%3e");
+    background-size: cover; border-radius: 48px; overflow: hidden;
+}
 .iphone-screen-content { width: 100%; height: 100%; position: relative; display: flex; flex-direction: column; }
+
+/* --- Dynamic Island (Controlado via JS com Anime.js) --- */
 .dynamic-island-notch {
     position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-    width: 220px; height: 40px; z-index: 10; padding-top: 4px; /* Fixa a posição da ilha */
+    width: 220px; height: 40px; z-index: 10; padding-top: 4px;
     display: flex; justify-content: center; align-items: center;
 }
 .dynamic-island {
-    background-color: #000; border-radius: 50px; color: white; height: 36px;
-    font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; justify-content: center;
-    min-width: 125px; padding: 0 16px; transition: all 0.6s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    background-color: #000; border-radius: 50px; color: white;
+    font-weight: 500; display: flex; justify-content: center; align-items: center;
+    position: relative; overflow: hidden;
 }
-.dynamic-island.expanded { min-width: 95%; height: 80px; }
-.island-content { opacity: 0; transform: scale(0.95); transition: opacity 0.3s ease 0.2s, transform 0.3s ease 0.2s; white-space: nowrap; }
-.dynamic-island.active .island-content { opacity: 1; transform: scale(1); }
-.island-content .material-symbols-outlined { font-size: 1.5rem; margin-right: 8px; vertical-align: middle; }
+.island-content-wrapper { display: flex; align-items: center; gap: 8px; }
 
-/* --- iOS App UI --- */
-.app-screen { flex-grow: 1; overflow-y: auto; }
+/* --- iOS App UI (Dark Glassmorphism) --- */
 .app-page { display: none; height: 100%; flex-direction: column; }
-.app-page.active { display: flex; animation: fadeIn 0.5s ease; }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.app-page.active { display: flex; }
 .app-header { padding: 80px 20px 10px; }
 .app-header .date-indicator { font-size: 0.8rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
-.app-header h1 { font-size: 2.2rem; margin: 0; font-weight: 700; }
+.app-header h1 { font-size: 2.2rem; margin: 0; font-weight: 700; color: var(--text-primary); }
 .app-content { padding: 10px 20px; }
 .card-highlight {
-    background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+    background: rgba(50, 50, 55, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
     padding: 20px; margin-top: 20px; border-radius: var(--radius-l);
-    border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: var(--shadow-soft);
-    display: flex; justify-content: space-between; align-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
-.card-category { font-size: 0.8rem; font-weight: 600; color: var(--blue-accent); }
-.card-text h3 { margin: 4px 0 0; font-weight: 600; }
-.card-icon { font-size: 2.5rem; color: var(--text-secondary); }
 
-/* --- Tab Bar (Glassmorphism) --- */
+/* --- Tab Bar --- */
 .tab-bar {
     display: flex; justify-content: space-around; padding: 8px 0 20px;
-    background: rgba(242, 242, 247, 0.7); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(110, 110, 115, 0.2); margin: 0 10px; border-radius: 0 0 var(--radius-l) var(--radius-l);
+    background: rgba(30, 30, 32, 0.7); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+    border-top: 1px solid var(--border-color); margin: 0 10px; border-radius: 0 0 var(--radius-l) var(--radius-l);
 }
-.tab-button {
-    background: none; border: none; font-size: 0.7rem; display: flex; flex-direction: column;
-    align-items: center; color: var(--text-secondary); cursor: pointer; position: relative; gap: 2px;
-}
-.tab-button.active { color: var(--blue-accent); }
-.badge {
-    background: var(--red-accent); color: white; border-radius: 50%;
-    width: 20px; height: 20px; font-size: 0.75rem; font-weight: 500;
-    display: flex; justify-content: center; align-items: center;
-    position: absolute; top: -5px; right: 10px; border: 2px solid var(--bg-macos-window);
-}
-.badge.hidden { display: none; }
+.tab-button.active { color: var(--blue-glow); }
 
 /* --- macOS Window Dashboard --- */
 .macos-window {
-    width: 700px; background-color: var(--bg-macos-window); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-    border-radius: var(--radius-m); border: 1px solid var(--border-light);
-    box-shadow: var(--shadow-medium);
+    width: 700px; background-color: var(--bg-macos-window); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+    border-radius: var(--radius-m); border: 1px solid var(--border-color);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
 }
-.title-bar {
-    display: flex; align-items: center; padding: 12px; border-bottom: 1px solid var(--border-light);
+.title-bar .traffic-lights .light:hover { filter: brightness(1.2); }
+.window-content { padding: 20px; }
+.dashboard-card { background: rgba(18, 18, 20, 0.5); border-radius: var(--radius-s); padding: 16px; border: 1px solid var(--border-color); }
+.kpi p { font-size: 2.2rem; font-weight: 600; margin: 0; color: var(--text-primary); text-shadow: 0 0 10px rgba(255,255,255,0.1); }
+.pipeline-list .material-symbols-outlined { color: var(--blue-glow); text-shadow: var(--shadow-glow-blue); }
+.funnel-bar div { background: var(--green-glow); box-shadow: 0 0 15px rgba(52, 199, 89, 0.5); }
+#log-container { background-color: #0A0A0B; border: 1px solid var(--border-color); }
+.log-entry.animate-in { animation: slideIn 0.3s ease-out; }
+@keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* --- Botão Principal --- */
+#simular-btn {
+    background: var(--blue-glow); color: white; border: none; padding: 16px 32px; font-size: 1.1rem; font-weight: 500;
+    border-radius: var(--radius-m); cursor: pointer; transition: all 0.3s ease;
+    box-shadow: var(--shadow-glow-blue);
 }
+#simular-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 0 30px rgba(0, 122, 255, 0.5); }
+
+/* --- Animações de Entrada --- */
+.initial-hidden { opacity: 0; transform: translateY(20px); }
+
+/* (O resto do CSS de layout pode ser majoritariamente reaproveitado do anterior, com as cores trocadas) */
+/* Adapte as classes do CSS anterior para usar as novas variáveis de cor e fontes, mantendo o layout. */
+/* O código abaixo é uma continuação do CSS anterior, apenas com as adaptações de cores e fontes para o tema escuro. */
+
+.demonstration-container { display: flex; justify-content: center; gap: 60px; padding: 20px 40px; flex-wrap: wrap; align-items: flex-start; }
+.column-mvp h2.column-title { text-align: center; font-weight: 500; color: var(--text-secondary); margin: 0 0 24px; }
+.title-bar { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid var(--border-color); }
 .traffic-lights { display: flex; gap: 8px; margin-right: 12px; }
 .light { width: 12px; height: 12px; border-radius: 50%; }
 .light.red { background: #ff5f56; } .light.yellow { background: #ffbd2e; } .light.green { background: #27c93f; }
 .window-title { font-size: 0.9rem; font-weight: 500; color: var(--text-secondary); }
-.window-content { padding: 20px; }
 .dashboard-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
-.dashboard-card { background: rgba(255, 255, 255, 0.6); border-radius: var(--radius-s); padding: 16px; border: 1px solid rgba(0,0,0,0.05); }
 .dashboard-card h4 { margin: 0 0 12px; font-weight: 500; color: var(--text-secondary); font-size: 0.9rem; }
-.kpi p { font-size: 2.2rem; font-weight: 600; margin: 0; color: var(--text-primary); }
 .data-source { grid-column: span 2; }
 .pipeline-list { list-style: none; margin: 0; padding: 0; }
 .pipeline-list li { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 0.95rem; }
-.pipeline-list .material-symbols-outlined { color: var(--blue-accent); }
 .chart { grid-column: span 2; }
 .funnel-step { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
 .funnel-step span { font-size: 0.9rem; } .funnel-step strong { font-weight: 600; }
-.funnel-bar { height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; margin-bottom: 8px; }
-.funnel-bar div { height: 100%; background-color: var(--green-accent); border-radius: 4px; transition: width 0.5s ease; }
+.funnel-bar { height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; margin-bottom: 8px; }
 .live-log { grid-column: span 4; margin-top: 16px; }
-#log-container { height: 150px; background-color: #f5f5f7; border: 1px solid var(--border-light); font-family: Menlo, Monaco, 'Courier New', monospace; font-size: 0.85rem; padding: 12px; border-radius: var(--radius-s); overflow-y: auto; }
-
-/* --- Botão Principal --- */
+#log-container { height: 150px; overflow-y: auto; }
 .main-footer { text-align: center; padding: 40px; }
-#simular-btn {
-    background: var(--blue-accent); color: white; border: none; padding: 16px 32px; font-size: 1.1rem; font-weight: 500;
-    border-radius: var(--radius-m); cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-soft);
-}
-#simular-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0, 122, 255, 0.2); }
-#simular-btn:disabled { background-color: var(--text-secondary); cursor: not-allowed; }
-
-/* --- Animações e Classes de Estado --- */
-.highlight-update { animation: highlight 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-@keyframes highlight { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+#simular-btn:disabled { background-color: var(--text-secondary); cursor: not-allowed; box-shadow: none; }
+.tab-bar { position: absolute; bottom: 10px; left: 10px; right: 10px; }
+.tab-button { background: none; border: none; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); cursor: pointer; position: relative; gap: 2px; }
+.badge { background: var(--red-glow); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 0.75rem; font-weight: 500; display: flex; justify-content: center; align-items: center; position: absolute; top: -5px; right: 10px; border: 2px solid var(--bg-macos-window); }
+.badge.hidden { display: none; }
 .empty-state { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
-.main-action-btn { background: var(--blue-accent); color: white; border: none; padding: 14px; width: 100%; font-size: 1rem; font-weight: 500; border-radius: var(--radius-s); margin-top: 10px; cursor: pointer; }
+.main-action-btn { background: var(--blue-glow); color: white; border: none; padding: 14px; width: 100%; font-size: 1rem; font-weight: 500; border-radius: var(--radius-s); margin-top: 10px; cursor: pointer; }
+.card-text .card-category { font-size: 0.8rem; font-weight: 600; color: var(--blue-glow); }
+.card-text h3 { margin: 4px 0 0; font-weight: 600; }
+.card-icon { font-size: 2.5rem; color: var(--text-secondary); }
