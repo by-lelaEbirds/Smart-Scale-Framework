@@ -1,0 +1,195 @@
+/* --- Configurações Globais --- */
+:root {
+    --primary-color: #27ae60;
+    --secondary-color: #2c3e50;
+    --background-color: #ecf0f1;
+    --card-bg-color: #ffffff;
+    --font-color: #34495e;
+    --shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--font-color);
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+}
+
+header {
+    margin-bottom: 40px;
+}
+
+h1 {
+    color: var(--secondary-color);
+}
+
+h2 {
+    color: var(--secondary-color);
+    margin-bottom: 20px;
+}
+
+/* --- Layout Principal --- */
+.demonstracao-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.coluna-mvp {
+    flex-basis: 400px;
+}
+
+/* --- Estilos do Mockup de Celular --- */
+.phone-container {
+    width: 320px;
+    height: 600px;
+    background-color: #111;
+    border-radius: 40px;
+    padding: 15px;
+    box-shadow: var(--shadow);
+    margin: 0 auto;
+}
+
+.screen {
+    background-color: var(--card-bg-color);
+    height: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.app-header h3 {
+    margin: 0;
+}
+.app-header p {
+    margin: 5px 0 0;
+    font-size: 0.9em;
+}
+
+.app-content {
+    padding: 15px;
+    flex-grow: 1;
+}
+
+.offer-card {
+    display: flex;
+    align-items: center;
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    text-align: left;
+    border: 1px solid #eee;
+}
+
+.offer-card img {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+}
+
+.offer-card h4, .offer-card p {
+    margin: 0;
+}
+
+.status-compra {
+    margin-top: 20px;
+    font-style: italic;
+    font-size: 0.9em;
+    padding: 10px;
+    background-color: #e8f6ef;
+    border-radius: 8px;
+    color: #218c58;
+}
+
+/* --- Notificação Push --- */
+.push-notification {
+    width: 350px;
+    background-color: var(--card-bg-color);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    padding: 15px;
+    margin: 20px auto 0;
+    text-align: left;
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+.push-notification.hidden {
+    transform: translateY(20px);
+    opacity: 0;
+    pointer-events: none; /* Impede interação quando escondido */
+}
+.notification-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8em;
+    color: #7f8c8d;
+    margin-bottom: 10px;
+}
+.notification-body p {
+    margin: 0;
+}
+.notification-body p:first-child {
+    font-weight: 500;
+}
+
+/* --- Dashboard do Gerente --- */
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+.dashboard-card {
+    background-color: var(--card-bg-color);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.dashboard-card h4 {
+    margin: 0 0 10px;
+    color: var(--primary-color);
+}
+
+.data-point {
+    font-size: 2em;
+    font-weight: 700;
+    color: var(--secondary-color);
+    margin: 0;
+}
+.data-point-small {
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+/* --- Botão de Simulação --- */
+footer {
+    margin-top: 40px;
+}
+
+#simular-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: var(--shadow);
+}
+#simular-btn:hover {
+    background-color: #218c58;
+}
