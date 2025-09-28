@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVP Didático - Super App Cesta Certa</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <header>
+        <h1>Demonstração MVP: Super App "Cesta Certa"</h1>
+        <p>Veja na prática como o ciclo de dados, leads e impacto funciona.</p>
+    </header>
+
+    <main class="demonstracao-container">
+
+        <section class="coluna-mvp">
+            <h2>Visão do Cliente (João)</h2>
+            <div class="phone-container">
+                <div class="screen">
+                    <div class="app-header">
+                        <h3>Olá, João! 👋</h3>
+                        <p>Suas ofertas personalizadas chegaram:</p>
+                    </div>
+                    <div class="app-content">
+                        <article class="offer-card pet">
+                            <img src="https://i.imgur.com/J8w2aMs.png" alt="Ícone de ração de pet">
+                            <div>
+                                <h4>Ração Magnus Premium</h4>
+                                <p><strong>15% OFF</strong> na sua marca favorita.</p>
+                            </div>
+                        </article>
+                        <article class="offer-card wine">
+                            <img src="https://i.imgur.com/k2wL1sW.png" alt="Ícone de garrafa de vinho">
+                            <div>
+                                <h4>Vinho Tinto Chileno</h4>
+                                <p><strong>Leve 2, Pague 1</strong>. Perfeito para o fim de semana.</p>
+                            </div>
+                        </article>
+                        <p id="status-compra" class="status-compra">Sua cesta atual contém: Macarrão e Molho de Tomate.</p>
+                    </div>
+                </div>
+            </div>
+            <div id="push-notification" class="push-notification hidden">
+                <div class="notification-header">
+                    <p>Cesta Certa</p>
+                    <p>agora</p>
+                </div>
+                <div class="notification-body">
+                    <p><strong>Oferta para sua macarronada!</strong></p>
+                    <p>Vimos que você pegou macarrão. Que tal levar um Queijo Parmesão com 30% de desconto?</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="coluna-mvp">
+            <h2>Visão do Supermercado (Gerente)</h2>
+            <div class="dashboard">
+                <article class="dashboard-card">
+                    <h4>Ticket Médio (Hoje)</h4>
+                    <p class="data-point" id="ticket-medio">R$ 87,50</p>
+                </article>
+                <article class="dashboard-card">
+                    <h4>Cross-sells por App</h4>
+                    <p class="data-point" id="cross-sells">132</p>
+                </article>
+                <article class="dashboard-card">
+                    <h4>Principal Combinação do Dia</h4>
+                    <p class="data-point-small" id="combinacao">Pão de Alho + Linguiça</p>
+                </article>
+                 <article class="dashboard-card">
+                    <h4>Conversão de Ofertas Push</h4>
+                    <p class="data-point" id="conversao-push">28%</p>
+                </article>
+            </div>
+        </section>
+
+    </main>
+    
+    <footer>
+        <button id="simular-btn">▶️ Simular Jornada do João no Corredor de Massas</button>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
