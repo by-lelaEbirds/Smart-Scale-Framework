@@ -1,75 +1,170 @@
-// Aguarda o carregamento completo do HTML antes de executar o script
 document.addEventListener('DOMContentLoaded', () => {
-
-    // Seleciona os elementos que vamos manipular
+    // --- ELEMENTOS DO DOM ---
     const simularBtn = document.getElementById('simular-btn');
-    const pushNotification = document.getElementById('push-notification');
-    const statusCompra = document.getElementById('status-compra');
+    const logContainer = document.getElementById('log-container');
     
-    // Elementos do dashboard
-    const ticketMedioEl = document.getElementById('ticket-medio');
-    const crossSellsEl = document.getElementById('cross-sells');
-    const combinacaoEl = document.getElementById('combinacao');
+    // Elementos do App
+    const dynamicIsland = document.getElementById('dynamic-island');
+    const islandContent = dynamicIsland.querySelector('.island-content');
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const appPages = document.querySelectorAll('.app-page');
+    const offersBadge = document.getElementById('offers-badge');
+    const offersList = document.getElementById('offers-list');
 
-    // Estado inicial dos dados (para poder resetar a simulação se necessário)
-    const estadoInicial = {
-        ticket: 87.50,
-        sells: 132,
-        combinacao: "Pão de Alho + Linguiça"
+    // Elementos do Dashboard (KPIs)
+    const kpiTicket = document.getElementById('kpi-ticket');
+    const kpiCrossSells = document.getElementById('kpi-cross-sells');
+    const kpiRevenue = document.getElementById('kpi-revenue');
+    const kpiConversion = document.getElementById('kpi-conversion');
+    const funilGerados = document.getElementById('funil-gerados');
+    const funilConvertidos = document.getElementById('funil-convertidos');
+
+    // --- ESTADO INICIAL DA SIMULAÇÃO ---
+    let state = {
+        baseTicket: 87.50,
+        baseSells: 132,
+        baseRevenue: 1650.00,
+        baseLeads: 471
     };
+    
+    let simulationRunning = false;
+    
+    // --- FUNÇÕES DE LÓGICA ---
+    
+    // Adiciona uma entrada ao log de eventos
+    function addToLog(message, level = 'info') {
+        const timestamp = new Date().toLocaleTimeString();
+        const entry = document.createElement('div');
+        entry.classList.add('log-entry');
+        entry.innerHTML = `<span class="timestamp">[${timestamp}]</span> <span class="level-${level}">[${level.toUpperCase()}]</span> ${message}`;
+        logContainer.appendChild(entry);
+        logContainer.scrollTop = logContainer.scrollHeight; // Auto-scroll
+    }
 
-    // Função que executa a simulação da jornada
+    // Atualiza um KPI no dashboard com animação
+    function updateKpi(element, value) {
+        element.textContent = value;
+        element.classList.add('highlight-update');
+        setTimeout(() => element.classList.remove('highlight-update'), 1000);
+    }
+    
+    // Controla a Ilha Dinâmica
+    function islandController(action, text = '', duration = 3000) {
+        if (action === 'show') {
+            islandContent.innerHTML = text;
+            dynamicIsland.classList.add('active');
+            setTimeout(() => islandController('hide'), duration);
+        } else if (action === 'hide') {
+            dynamicIsland.classList.remove('active', 'expanded');
+        }
+    }
+    
+    // Navegação do App
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            if (simulationRunning) return; // Trava navegação durante a simulação
+            
+            const targetScreen = button.dataset.screen;
+            
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            
+            appPages.forEach(page => {
+                page.classList.remove('active');
+                if (page.id === `screen-${targetScreen}`) {
+                    page.classList.add('active');
+                }
+            });
+            
+            if (targetScreen === 'offers') {
+                offersBadge.classList.add('hidden');
+            }
+        });
+    });
+
+    // Função principal da simulação
     function executarSimulacao() {
-        // Desabilita o botão para evitar múltiplos cliques
         simularBtn.disabled = true;
-        simularBtn.textContent = "Simulando...";
+        simulationRunning = true;
+        simularBtn.textContent = "Simulação em Andamento...";
+        addToLog("Iniciando simulação: Jornada do cliente 'João'.");
 
-        // 1. A notificação aparece após um tempo (simula o cliente andando até o corredor)
+        // STEP 1: João entra no corredor de massas
         setTimeout(() => {
-            pushNotification.classList.remove('hidden');
-        }, 1500); // 1.5 segundos de espera
+            addToLog("Geofence da loja detectou João no corredor 5 (Massas).");
+            document.querySelector('.tab-button[data-screen="scanner"]').click(); // Simula que ele está com o scanner aberto
+            islandController('show', '<span class="material-symbols-outlined" style="font-size:1.2rem; margin-right: 5px;">pin_drop</span> Corredor de Massas');
+        }, 1500);
 
-        // 2. O cliente "aceita" a oferta e o impacto é refletido nos painéis
+        // STEP 2: Plataforma DataSpark processa os dados
         setTimeout(() => {
-            // Atualiza a visão do cliente
-            statusCompra.textContent = 'Queijo Parmesão adicionado com 30% OFF!';
-            statusCompra.style.backgroundColor = '#27ae60';
-            statusCompra.style.color = 'white';
+            addToLog("Plataforma processando dados de João...");
+            addToLog("Histórico de compras: macarrão (recorrência alta).");
+            addToLog("Regra de negócio #C-14 (cross-sell queijo) acionada.", "warn");
+            addToLog(`Lead gerado para o cliente ID ${Math.floor(Math.random() * 1000)}.`);
+            updateKpi(funilGerados, ++state.baseLeads);
+        }, 3500);
 
-            // Atualiza a visão do gerente (o impacto no negócio)
-            let ticketAtual = parseFloat(ticketMedioEl.textContent.replace('R$ ', '').replace(',', '.'));
-            let sellsAtuais = parseInt(crossSellsEl.textContent);
+        // STEP 3: A oferta é enviada para o app
+        setTimeout(() => {
+            addToLog("Oferta de Queijo Parmesão (30% OFF) enviada via push.", "success");
+            offersBadge.textContent = "1";
+            offersBadge.classList.remove('hidden');
+            islandController('show', '<span class="material-symbols-outlined" style="font-size:1.2rem; margin-right: 5px;">sell</span> Nova oferta para você!');
             
-            // Vamos simular o aumento (Queijo custou R$ 12,50 com o desconto)
-            ticketMedioEl.textContent = `R$ ${(ticketAtual + 12.50).toFixed(2).replace('.', ',')}`;
-            crossSellsEl.textContent = sellsAtuais + 1;
-            combinacaoEl.textContent = "Macarrão + Queijo Parmesão";
+            // Cria o card da oferta dinamicamente
+            offersList.innerHTML = `
+                <div class="card-highlight">
+                    <h4>Queijo Parmesão Faixa Azul</h4>
+                    <p>Uma oferta especial para sua macarronada!</p>
+                    <p style="font-size: 1.5rem; font-weight: bold; color: var(--secondary-color);">30% OFF</p>
+                    <button id="accept-offer-btn" class="main-action-btn">Adicionar à Cesta</button>
+                </div>`;
             
-            // Efeito visual para destacar a mudança
-            destacarElemento(ticketMedioEl);
-            destacarElemento(crossSellsEl);
-            destacarElemento(combinacaoEl);
+            document.getElementById('accept-offer-btn').addEventListener('click', aceitarOferta);
+        }, 5500);
 
-        }, 3500); // 3.5 segundos depois (2s após a notificação)
+        // STEP 4: João navega para ver a oferta
+        setTimeout(() => {
+            addToLog("Cliente visualizou a notificação.");
+            document.querySelector('.tab-button[data-screen="offers"]').click();
+        }, 6500);
+    }
+
+    function aceitarOferta() {
+        addToLog("OFERTA ACEITA! Cliente adicionou o Queijo à cesta.", "success");
+        islandController('show', '<span class="material-symbols-outlined" style="font-size:1.2rem; margin-right: 5px;">check_circle</span> Item adicionado!');
+
+        // Lógica de atualização dos KPIs
+        const valorQueijo = 12.50; // Preço com desconto
         
-        // 3. Reseta o botão para uma nova demonstração
+        state.baseSells++;
+        state.baseRevenue += valorQueijo;
+        state.baseTicket += valorQueijo / (state.baseSells-1); // Simulação de aumento do ticket médio
+        
+        updateKpi(kpiCrossSells, state.baseSells);
+        updateKpi(kpiRevenue, `R$ ${state.baseRevenue.toFixed(2).replace('.',',')}`);
+        updateKpi(kpiTicket, `R$ ${state.baseTicket.toFixed(2).replace('.',',')}`);
+        
+        const convertidos = parseInt(funilConvertidos.textContent) + 1;
+        updateKpi(funilConvertidos, convertidos);
+        
+        const conversao = (convertidos / state.baseLeads) * 100;
+        updateKpi(kpiConversion, `${conversao.toFixed(0)}%`);
+
+        // Finaliza a simulação
+        this.textContent = "Adicionado!";
+        this.disabled = true;
+        
         setTimeout(() => {
             simularBtn.disabled = false;
-            simularBtn.textContent = "▶️ Simular Novamente";
-        }, 4500);
+            simulationRunning = false;
+            simularBtn.textContent = "▶️ Iniciar Nova Simulação";
+            addToLog("Fim do ciclo da simulação.");
+            document.querySelector('.tab-button[data-screen="home"]').click();
+        }, 2000);
     }
     
-    // Função para adicionar um efeito visual de "piscar" quando um dado é atualizado
-    function destacarElemento(elemento) {
-        elemento.style.transition = 'transform 0.2s ease, color 0.2s ease';
-        elemento.style.transform = 'scale(1.1)';
-        elemento.style.color = '#e67e22';
-        setTimeout(() => {
-            elemento.style.transform = 'scale(1)';
-            elemento.style.color = ''; // Volta à cor original do CSS
-        }, 300);
-    }
-
-    // Adiciona o evento de clique ao botão
+    // Adiciona o evento de clique ao botão principal
     simularBtn.addEventListener('click', executarSimulacao);
 });
