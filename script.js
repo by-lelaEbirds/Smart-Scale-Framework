@@ -28,26 +28,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // --- LÓGICA DA SIMULAÇÃO ---
-    // --- CORREÇÃO DEFINITIVA AQUI ---
+    // --- CORREÇÃO DEFINITIVA E À PROVA DE FALHAS ---
     function executarOferta(option) {
+        console.log(`[DEBUG] Opção escolhida: ${option}`);
         addToLog(`Oferta do Teste A/B (${option}) enviada ao cliente.`);
         islandController('show', { layout: 'compact', content: { icon: 'check_circle', text: `Oferta ${option} enviada` } });
         
         if (option === 'A') {
-            // SUCESSO GARANTIDO
             addToLog("RESULTADO: Cliente converteu com a Oferta A!");
             
-            // 1. ATUALIZA O ESTADO INTERNO PRIMEIRO
-            currentState.sells++; // sobe para 133
-            currentState.ticket += (Math.random() * 1.5 + 0.5); // sobe um valor visível
+            // 1. Atualiza o estado interno
+            currentState.sells++;
+            currentState.ticket += (Math.random() * 1.5 + 0.5);
             
-            // 2. MANDA ANIMAR A TELA COM OS NOVOS VALORES DO ESTADO
-            animateKpi(kpis.crossSells, currentState.sells);
+            console.log(`[DEBUG] Novo estado: Sells=${currentState.sells}, Ticket=${currentState.ticket}`);
+
+            // 2. Atualiza a tela com os novos valores
+            // Atualização direta e instantânea para o Cross-sells para 100% de confiabilidade
+            kpis.crossSells.textContent = currentState.sells; 
+            kpis.crossSells.classList.add('highlight-update');
+            setTimeout(() => kpis.crossSells.classList.remove('highlight-update'), 1000);
+
+            // Animação para o Ticket Médio
             animateKpi(kpis.ticket, currentState.ticket, true);
 
         } else { // Opção B
-            // RECUSA GARANTIDA
             addToLog("RESULTADO: Cliente recusou a Oferta B. Indicadores inalterados.");
+            console.log('[DEBUG] Opção B recusada. Nenhum KPI alterado.');
         }
         
         offersList.innerHTML = `<p class="empty-state">Aguardando próxima oportunidade...</p>`;
