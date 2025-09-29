@@ -1,4 +1,4 @@
-/* Nenhuma alteração necessária aqui, o código anterior está correto */
+/* --- Design System (Light Theme Only) --- */
 :root {
     --bg-primary: #f5f5f7; --bg-secondary: #ffffff; --bg-macos-window: rgba(242, 242, 247, 0.85);
     --text-primary: #1d1d1f; --text-secondary: #6e6e73; --border-color: rgba(0, 0, 0, 0.1);
@@ -7,9 +7,11 @@
     --shadow-blue-accent: 0 0 20px rgba(0, 122, 255, 0.2);
     --radius-l: 24px; --radius-m: 16px; --radius-s: 12px;
 }
-/* (Resto do CSS idêntico à versão anterior) */
+
+/* --- Base & Layout --- */
 * { box-sizing: border-box; }
 body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--bg-primary); color: var(--text-primary); margin: 0; -webkit-font-smoothing: antialiased; }
+/* --- Cabeçalho --- */
 .main-header { padding: 20px 40px; position: relative; display: flex; justify-content: space-between; align-items: center; }
 .logo { display: flex; align-items: center; gap: 12px; }
 .logo .material-symbols-outlined { font-size: 2.5rem; color: var(--blue-accent); }
@@ -17,8 +19,10 @@ body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--
 .header-controls { display: flex; align-items: center; gap: 16px; }
 .presentation-link { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-secondary); text-decoration: none; padding: 10px 16px; border-radius: var(--radius-m); font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; }
 .presentation-link:hover { color: var(--blue-accent); border-color: var(--blue-accent); box-shadow: var(--shadow-blue-accent); }
+/* --- Layout Principal --- */
 .demonstration-container { display: flex; justify-content: center; gap: 60px; padding: 20px 40px; flex-wrap: wrap; align-items: flex-start; }
 .column-mvp .column-title { text-align: center; font-weight: 500; color: var(--text-secondary); margin: 0 0 24px; }
+/* --- iPhone Mockup --- */
 .iphone-mockup { width: 380px; height: 780px; background-color: var(--bg-secondary); border: 12px solid #1c1c1e; border-radius: 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); position: relative; transition: all 0.5s ease; }
 .iphone-mockup:hover { transform: scale(1.02) translateY(-5px); }
 .iphone-body { width: 100%; height: 100%; border-radius: 48px; overflow: hidden; background: var(--iphone-body-bg); }
@@ -44,11 +48,13 @@ body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--
 .card-text .card-category { font-size: 0.8rem; font-weight: 600; color: var(--blue-accent); }
 .card-text h3 { margin: 4px 0 0; font-weight: 600; }
 .card-icon { font-size: 2.5rem; color: var(--text-secondary); }
+/* --- Tab Bar --- */
 .tab-bar { position: absolute; bottom: 10px; left: 10px; right: 10px; display: flex; justify-content: space-around; padding: 8px 0 20px; background: rgba(242, 242, 247, 0.7); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-top: 1px solid var(--border-color); border-radius: 0 0 var(--radius-l) var(--radius-l); }
 .tab-button { background: none; border: none; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); cursor: pointer; position: relative; gap: 2px; transition: color 0.2s ease; }
 .tab-button.active { color: var(--blue-accent); }
 .badge { background: var(--red-accent); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 0.75rem; font-weight: 500; display: flex; justify-content: center; align-items: center; position: absolute; top: -5px; right: 10px; border: 2px solid var(--bg-secondary); }
 .badge.hidden { display: none; }
+/* --- macOS Window Dashboard --- */
 .macos-window { width: 700px; background-color: var(--bg-macos-window); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius-m); border: 1px solid var(--border-color); box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
 .title-bar { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid var(--border-color); }
 .traffic-lights { display: flex; gap: 8px; margin-right: 12px; }
@@ -67,6 +73,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--
 #log-container { height: 150px; background-color: var(--bg-primary); border: 1px solid var(--border-color); font-family: Menlo, Monaco, 'Courier New', monospace; font-size: 0.85rem; padding: 12px; border-radius: var(--radius-s); overflow-y: auto; }
 .log-entry.animate-in { animation: slideIn 0.3s ease-out; }
 @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+/* --- Footer & Botão --- */
 .main-footer { text-align: center; padding: 40px; }
 #simular-btn { background: var(--blue-accent); color: white; border: none; padding: 16px 32px; font-size: 1.1rem; font-weight: 500; border-radius: var(--radius-m); cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-blue-accent); }
 #simular-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 0 30px rgba(0, 122, 255, 0.5); }
@@ -74,6 +81,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--
 .initial-hidden { opacity: 0; transform: translateY(20px); }
 .empty-state { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
 .main-action-btn { background: var(--blue-accent); color: white; border: none; padding: 14px; width: 100%; font-size: 1rem; font-weight: 500; border-radius: var(--radius-s); margin-top: 10px; cursor: pointer; }
+/* --- Tooltip e Teste A/B --- */
 .dashboard-card h4 { position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .info-icon { display: inline-block; width: 18px; height: 18px; border-radius: 50%; background-color: var(--text-secondary); color: var(--bg-secondary); font-size: 12px; font-weight: bold; text-align: center; line-height: 18px; cursor: help; }
 .tooltip { position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background-color: var(--bg-secondary); color: var(--text-primary); padding: 12px; border-radius: var(--radius-s); border: 1px solid var(--border-color); width: 250px; text-align: left; font-size: 0.85rem; font-weight: 400; line-height: 1.4; z-index: 100; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease; }
