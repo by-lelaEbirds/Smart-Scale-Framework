@@ -17,16 +17,16 @@
             <span class="material-symbols-outlined">insights</span>
             <h1>DataSpark</h1>
         </div>
-        <p>Market Intelligence Platform</p>
-        
-        <button id="theme-switcher" class="theme-switcher" aria-label="Mudar tema">
-            <span class="material-symbols-outlined icon-sun">light_mode</span>
-            <span class="material-symbols-outlined icon-moon">dark_mode</span>
-        </button>
+        <div class="header-controls">
+            <a href="./presentation/index.html" class="presentation-link">Ver Apresentação</a>
+            <button id="theme-switcher" class="theme-switcher" aria-label="Mudar tema">
+                <span class="material-symbols-outlined icon-sun">light_mode</span>
+                <span class="material-symbols-outlined icon-moon">dark_mode</span>
+            </button>
+        </div>
     </header>
 
     <main class="demonstration-container">
-
         <section class="column-mvp initial-hidden" id="phone-column">
             <h2 class="column-title">Consumer App: "Cesta Certa"</h2>
             <div class="iphone-mockup">
@@ -63,26 +63,11 @@
                 <div class="title-bar"><div class="traffic-lights"><div class="light red"></div><div class="light yellow"></div><div class="light green"></div></div><span class="window-title">Supermercado Fidelidade - Market Intelligence</span></div>
                 <div class="window-content">
                     <div class="dashboard-grid">
-                        <div class="dashboard-card kpi">
-                            <h4>Ticket Médio<span class="info-icon">?</span><div class="tooltip">O Ticket Médio é o valor gasto por cliente em cada compra. Nosso objetivo é aumentar esse número com ofertas inteligentes (cross-sell), gerando mais receita sem precisar de mais clientes.</div></h4>
-                            <p id="kpi-ticket">R$ 87,50</p>
-                        </div>
-                        <div class="dashboard-card kpi">
-                            <h4>Cross-sells<span class="info-icon">?</span><div class="tooltip">Cross-sells são vendas de produtos complementares sugeridos pela nossa IA (ex: vender queijo para quem comprou macarrão). Nosso objetivo é maximizar essa métrica, aumentando o valor de cada compra.</div></h4>
-                            <p id="kpi-cross-sells">132</p>
-                        </div>
-                        <div class="dashboard-card chart" id="demand-chart-container">
-                            <h4>Previsão de Demanda (Queijos)<span class="info-icon">?</span><div class="tooltip">Este gráfico usa dados históricos e um modelo de IA para prever a demanda futura. O objetivo é otimizar o estoque, evitando falta ou excesso de produtos nas prateleiras.</div></h4>
-                            <canvas id="demand-forecast-chart"></canvas>
-                        </div>
-                        <div class="dashboard-card chart" id="sentiment-chart-container">
-                            <h4>Análise de Sentimento (Fontes Externas)<span class="info-icon">?</span><div class="tooltip">Coletamos e analisamos dados de fontes externas (redes sociais, notícias) para medir a percepção pública sobre produtos. O objetivo é identificar tendências e ajustar estratégias de marketing.</div></h4>
-                            <canvas id="sentiment-analysis-chart"></canvas>
-                        </div>
-                        <div class="dashboard-card live-log">
-                            <h4>Log de Eventos em Tempo Real</h4>
-                            <div id="log-container"></div>
-                        </div>
+                        <div class="dashboard-card kpi"><h4>Ticket Médio<span class="info-icon">?</span><div class="tooltip">O Ticket Médio é o valor gasto por cliente em cada compra. Nosso objetivo é aumentar esse número com ofertas inteligentes (cross-sell), gerando mais receita sem precisar de mais clientes.</div></h4><p id="kpi-ticket">R$ 87,50</p></div>
+                        <div class="dashboard-card kpi"><h4>Cross-sells<span class="info-icon">?</span><div class="tooltip">Cross-sells são vendas de produtos complementares sugeridos pela nossa IA (ex: vender queijo para quem comprou macarrão). Nosso objetivo é maximizar essa métrica, aumentando o valor de cada compra.</div></h4><p id="kpi-cross-sells">132</p></div>
+                        <div class="dashboard-card chart" id="demand-chart-container"><h4>Previsão de Demanda (Queijos)<span class="info-icon">?</span><div class="tooltip">Este gráfico usa dados históricos e um modelo de IA para prever a demanda futura. O objetivo é otimizar o estoque, evitando falta ou excesso de produtos nas prateleiras.</div></h4><canvas id="demand-forecast-chart"></canvas></div>
+                        <div class="dashboard-card chart" id="sentiment-chart-container"><h4>Análise de Sentimento (Fontes Externas)<span class="info-icon">?</span><div class="tooltip">Coletamos e analisamos dados de fontes externas (redes sociais, notícias) para medir a percepção pública sobre produtos. O objetivo é identificar tendências e ajustar estratégias de marketing.</div></h4><canvas id="sentiment-analysis-chart"></canvas></div>
+                        <div class="dashboard-card live-log"><h4>Log de Eventos em Tempo Real</h4><div id="log-container"></div></div>
                     </div>
                 </div>
             </div>
