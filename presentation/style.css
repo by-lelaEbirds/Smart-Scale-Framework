@@ -1,14 +1,22 @@
+/* --- Design System (B&W Theme) --- */
 :root { --bg-color: #ffffff; --text-primary: #000000; --text-secondary: #555555; --border-color: #eeeeee; --blue-accent: #007aff; }
+/* --- Base & Typography --- */
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--bg-color); color: var(--text-primary); margin: 0; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+/* --- EFEITOS "GRAN FINALE" --- */
 #background-animation { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.2; }
+#progress-bar { position: fixed; top: 0; left: 0; height: 4px; background-color: var(--blue-accent); width: 0%; z-index: 200; transition: width 0.1s linear; }
+
+/* --- Header --- */
 .main-header { padding: 20px 5%; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; width: 100%; z-index: 100; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); }
 .logo { display: flex; align-items: center; gap: 12px; }
 .logo .material-symbols-outlined { font-size: 2.2rem; color: var(--blue-accent); }
 .main-header h1 { font-size: 1.5rem; margin: 0; font-weight: 600; }
 .back-to-mvp-button { background: var(--bg-color); border: 1px solid var(--border-color); color: var(--text-secondary); text-decoration: none; padding: 10px 16px; border-radius: 12px; font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; }
 .back-to-mvp-button:hover { color: var(--blue-accent); border-color: var(--blue-accent); }
+/* --- Estrutura dos Slides --- */
 main { display: block; position: relative; z-index: 1; }
 .slide { min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 80px 5%; border-bottom: 1px solid var(--border-color); }
 .slide:first-of-type { min-height: calc(100vh - 85px); }
@@ -16,6 +24,7 @@ main { display: block; position: relative; z-index: 1; }
 .slide-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin: 0 0 20px; line-height: 1.1; opacity: 0; }
 .slide-subtitle { font-size: clamp(1rem, 2vw, 1.2rem); color: var(--text-secondary); line-height: 1.6; max-width: 800px; margin: 0 auto 40px; }
 .section-tag { font-size: 1rem; font-weight: 600; margin-bottom: 10px; color: var(--text-secondary); }
+/* --- Componentes --- */
 .problem-cards, .tier-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; text-align: left; margin-top: 60px; }
 .problem-cards .card, .tier-cards .tier-card, .flow-step, .criterion { background: rgba(255, 255, 255, 0.8); border: 1px solid var(--border-color); padding: 30px; border-radius: 16px; transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease; transform-style: preserve-3d; }
 .problem-cards .card:hover, .tier-cards .tier-card:hover, .flow-step:hover, .criterion:hover { box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
