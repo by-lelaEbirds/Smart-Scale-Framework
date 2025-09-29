@@ -1,4 +1,4 @@
-/* --- Design System (Light Theme Only) --- */
+/* Nenhuma alteração necessária aqui, o código anterior está correto */
 :root {
     --bg-primary: #f5f5f7; --bg-secondary: #ffffff; --bg-macos-window: rgba(242, 242, 247, 0.85);
     --text-primary: #1d1d1f; --text-secondary: #6e6e73; --border-color: rgba(0, 0, 0, 0.1);
@@ -7,8 +7,7 @@
     --shadow-blue-accent: 0 0 20px rgba(0, 122, 255, 0.2);
     --radius-l: 24px; --radius-m: 16px; --radius-s: 12px;
 }
-
-/* --- Base & Layout --- */
+/* (Resto do CSS idêntico à versão anterior) */
 * { box-sizing: border-box; }
 body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--bg-primary); color: var(--text-primary); margin: 0; -webkit-font-smoothing: antialiased; }
 .main-header { padding: 20px 40px; position: relative; display: flex; justify-content: space-between; align-items: center; }
@@ -61,7 +60,7 @@ body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--
 .dashboard-card { background: var(--bg-secondary); border-radius: var(--radius-s); padding: 16px; border: 1px solid var(--border-color); }
 .dashboard-card h4 { margin: 0 0 12px; font-weight: 500; color: var(--text-secondary); font-size: 0.9rem; }
 .kpi { grid-column: span 2; }
-.kpi p { font-size: 2.2rem; font-weight: 700; margin: 0; color: var(--blue-accent); } /* COR AZUL APLICADA */
+.kpi p { font-size: 2.2rem; font-weight: 700; margin: 0; color: var(--blue-accent); }
 .chart { grid-column: span 2; height: 260px; display: flex; flex-direction: column; }
 .chart canvas { /* Intencionalmente em branco para Chart.js controlar */ }
 .live-log { grid-column: span 4; }
