@@ -20,11 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function applyTheme(theme) {
         document.body.classList.toggle('dark-theme', theme === 'dark');
         localStorage.setItem('theme', theme);
-        
-        // Apenas recria os gráficos. A simulação não precisa ser resetada aqui.
-        if (demandChart) {
-            setupCharts();
-        }
+        if (demandChart) { setupCharts(); }
     }
 
     themeSwitcher.addEventListener('click', () => {
@@ -47,23 +43,8 @@ document.addEventListener('DOMContentLoaded', () => {
             data: {
                 labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom (IA)', 'Seg (IA)'],
                 datasets: [
-                    { 
-                        label: 'Vendas Históricas', 
-                        data: currentState.demandHistory, // Usa o estado ATUAL
-                        borderColor: isDarkTheme ? 'rgba(142, 142, 147, 0.8)' : 'rgba(172, 172, 174, 1)', 
-                        tension: 0.4, 
-                        borderWidth: 2 
-                    }, 
-                    { 
-                        label: 'Previsão IA', 
-                        data: simulationRunning ? demandChart.data.datasets[1].data : [], // Mantém a previsão se a simulação estiver ativa
-                        borderColor: 'rgba(0, 122, 255, 1)', 
-                        borderDash: [5, 5], 
-                        tension: 0.4, 
-                        borderWidth: 3, 
-                        pointBackgroundColor: 'rgba(0, 122, 255, 1)', 
-                        pointRadius: 4 
-                    }]
+                    { label: 'Vendas Históricas', data: currentState.demandHistory, borderColor: isDarkTheme ? 'rgba(142, 142, 147, 0.8)' : 'rgba(172, 172, 174, 1)', tension: 0.4, borderWidth: 2 }, 
+                    { label: 'Previsão IA', data: simulationRunning ? demandChart.data.datasets[1].data : [], borderColor: 'rgba(0, 122, 255, 1)', borderDash: [5, 5], tension: 0.4, borderWidth: 3, pointBackgroundColor: 'rgba(0, 122, 255, 1)', pointRadius: 4 }]
             },
             options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } } }
         });
@@ -73,12 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'doughnut',
             data: {
                 labels: ['Positivo', 'Neutro', 'Negativo'],
-                datasets: [{ 
-                    data: currentState.sentiment, // Usa o estado ATUAL
-                    backgroundColor: ['rgba(52, 199, 89, 0.8)', 'rgba(142, 142, 147, 0.8)', 'rgba(255, 59, 48, 0.8)'], 
-                    borderColor: isDarkTheme ? '#1d1d1f' : '#ffffff', 
-                    borderWidth: 4 
-                }]
+                datasets: [{ data: currentState.sentiment, backgroundColor: ['rgba(52, 199, 89, 0.8)', 'rgba(142, 142, 147, 0.8)', 'rgba(255, 59, 48, 0.8)'], borderColor: isDarkTheme ? '#1d1d1f' : '#ffffff', borderWidth: 4 }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } } }
         });
@@ -93,20 +69,12 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetLayout = islandLayouts[layout];
             Object.values(islandLayouts).forEach(l => l.classList.remove('active'));
             targetLayout.classList.add('active');
-            if (layout === 'compact') {
-                targetLayout.querySelector('.material-symbols-outlined').textContent = content.icon;
-                targetLayout.querySelector('p').textContent = content.text;
-            } else if (layout === 'expanded') {
-                targetLayout.querySelector('.icon-wrapper .material-symbols-outlined').textContent = content.icon;
-                targetLayout.querySelector('.text-wrapper .title').textContent = content.title;
-                targetLayout.querySelector('.text-wrapper .subtitle').textContent = content.subtitle;
-            }
-            timeline.add({ targets: dynamicIsland, width: isExpanded ? 320 : 180, height: isExpanded ? 80 : 36 })
-                    .add({ targets: targetLayout, opacity: 1 }, '-=400');
+            if (layout === 'compact') { targetLayout.querySelector('.material-symbols-outlined').textContent = content.icon; targetLayout.querySelector('p').textContent = content.text; } 
+            else if (layout === 'expanded') { targetLayout.querySelector('.icon-wrapper .material-symbols-outlined').textContent = content.icon; targetLayout.querySelector('.text-wrapper .title').textContent = content.title; targetLayout.querySelector('.text-wrapper .subtitle').textContent = content.subtitle; }
+            timeline.add({ targets: dynamicIsland, width: isExpanded ? 320 : 180, height: isExpanded ? 80 : 36 }).add({ targets: targetLayout, opacity: 1 }, '-=400');
             if (duration > 0) setTimeout(() => islandController('hide'), duration);
         } else if (action === 'hide') {
-            timeline.add({ targets: '.island-layout', opacity: 0, duration: 150 })
-                    .add({ targets: dynamicIsland, width: 125, height: 36 });
+            timeline.add({ targets: '.island-layout', opacity: 0, duration: 150 }).add({ targets: dynamicIsland, width: 125, height: 36 });
         }
         islandAnimation = timeline;
     }
@@ -141,8 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         currentState = JSON.parse(JSON.stringify(initialState));
         kpis.crossSells.textContent = currentState.sells;
         kpis.ticket.textContent = `R$ ${currentState.ticket.toFixed(2).replace('.', ',')}`;
-        demandChart.data.datasets[0].data = currentState.demandHistory; demandChart.data.datasets[1].data = []; demandChart.update();
-        sentimentChart.data.datasets[0].data = currentState.sentiment; sentimentChart.update();
+        setupCharts(); // Recria os gráficos com o estado inicial
         offersBadge.classList.add('hidden');
         offersList.innerHTML = `<p class="empty-state">Suas ofertas personalizadas aparecerão aqui.</p>`;
         document.querySelector('.tab-button[data-screen="home"]').click();
@@ -158,6 +125,5 @@ document.addEventListener('DOMContentLoaded', () => {
     anime.timeline({ easing: 'easeOutExpo' }).add({ targets: ['#phone-column', '#dashboard-column', '#footer'], translateY: [20, 0], opacity: [0, 1], duration: 800, delay: anime.stagger(200, {start: 200}) });
     
     const savedTheme = localStorage.getItem('theme') || 'dark';
-    document.body.classList.toggle('dark-theme', savedTheme === 'dark');
-    setupCharts();
+    applyTheme(savedTheme);
 });
