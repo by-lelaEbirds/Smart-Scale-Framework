@@ -28,33 +28,40 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // --- LÓGICA DA SIMULAÇÃO ---
-    // --- CORREÇÃO DEFINITIVA E À PROVA DE FALHAS ---
+    // --- CORREÇÃO FINAL E DEFINITIVA ---
     function executarOferta(option) {
-        console.log(`[DEBUG] Opção escolhida: ${option}`);
         addToLog(`Oferta do Teste A/B (${option}) enviada ao cliente.`);
         islandController('show', { layout: 'compact', content: { icon: 'check_circle', text: `Oferta ${option} enviada` } });
         
         if (option === 'A') {
             addToLog("RESULTADO: Cliente converteu com a Oferta A!");
-            
-            // 1. Atualiza o estado interno
-            currentState.sells++;
-            currentState.ticket += (Math.random() * 1.5 + 0.5);
-            
-            console.log(`[DEBUG] Novo estado: Sells=${currentState.sells}, Ticket=${currentState.ticket}`);
 
-            // 2. Atualiza a tela com os novos valores
-            // Atualização direta e instantânea para o Cross-sells para 100% de confiabilidade
-            kpis.crossSells.textContent = currentState.sells; 
+            // Lógica realista para o Ticket Médio
+            const valorQueijo = 25.00;
+            const receitaAdicional = valorQueijo * 0.70; // 30% de desconto
+            const totalReceitaAntiga = currentState.ticket * currentState.sells;
+            const novaReceitaTotal = totalReceitaAntiga + receitaAdicional;
+            const novasVendasTotais = currentState.sells + 1;
+            const novoTicketMedio = novaReceitaTotal / novasVendasTotais;
+
+            // 1. Atualiza o estado interno PRIMEIRO
+            currentState.sells = novasVendasTotais;
+            currentState.ticket = novoTicketMedio;
+            
+            // 2. Atualiza a tela com os novos valores (sem animação, para 100% de robustez)
+            kpis.crossSells.textContent = currentState.sells;
+            kpis.ticket.textContent = `R$ ${currentState.ticket.toFixed(2).replace('.', ',')}`;
+
+            // Efeito visual de "highlight" para mostrar a mudança
             kpis.crossSells.classList.add('highlight-update');
-            setTimeout(() => kpis.crossSells.classList.remove('highlight-update'), 1000);
-
-            // Animação para o Ticket Médio
-            animateKpi(kpis.ticket, currentState.ticket, true);
+            kpis.ticket.classList.add('highlight-update');
+            setTimeout(() => {
+                kpis.crossSells.classList.remove('highlight-update');
+                kpis.ticket.classList.remove('highlight-update');
+            }, 1000);
 
         } else { // Opção B
             addToLog("RESULTADO: Cliente recusou a Oferta B. Indicadores inalterados.");
-            console.log('[DEBUG] Opção B recusada. Nenhum KPI alterado.');
         }
         
         offersList.innerHTML = `<p class="empty-state">Aguardando próxima oportunidade...</p>`;
