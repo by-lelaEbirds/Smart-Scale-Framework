@@ -19,12 +19,22 @@ body.dark-theme {
 * { box-sizing: border-box; }
 body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--bg-primary); color: var(--text-primary); margin: 0; -webkit-font-smoothing: antialiased; transition: background-color 0.3s ease, color 0.3s ease; }
 /* --- Cabeçalho e Botão de Tema --- */
-.main-header { padding: 20px 40px; position: relative; }
+.main-header { padding: 20px 40px; position: relative; display: flex; justify-content: space-between; align-items: center; }
 .logo { display: flex; align-items: center; gap: 12px; }
 .logo .material-symbols-outlined { font-size: 2.5rem; color: var(--blue-glow); }
 .main-header h1 { font-size: 1.8rem; margin: 0; font-weight: 600; }
-.main-header p { margin: 5px 0 0; color: var(--text-secondary); }
-.theme-switcher { position: absolute; top: 20px; right: 40px; background: var(--bg-secondary); border: 1px solid var(--border-color); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.3s ease; }
+.main-header p { margin: 5px 0 0; color: var(--text-secondary); display: none; } /* Escondido para layout mais limpo */
+
+.header-controls { display: flex; align-items: center; gap: 16px; }
+.presentation-link {
+    background: var(--bg-secondary); border: 1px solid var(--border-color);
+    color: var(--text-secondary); text-decoration: none; padding: 10px 16px;
+    border-radius: var(--radius-m); font-size: 0.9rem; font-weight: 500;
+    transition: all 0.3s ease;
+}
+.presentation-link:hover { color: var(--text-primary); border-color: var(--blue-glow); }
+
+.theme-switcher { background: var(--bg-secondary); border: 1px solid var(--border-color); width: 44px; height: 44px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); transition: all 0.3s ease; }
 .theme-switcher:hover { transform: scale(1.1); }
 .theme-switcher .material-symbols-outlined { color: var(--text-secondary); }
 .icon-sun { display: none; }
@@ -83,11 +93,7 @@ body.dark-theme .dashboard-card { background: rgba(18, 18, 20, 0.5); }
 .kpi { grid-column: span 2; }
 .kpi p { font-size: 2.2rem; font-weight: 600; margin: 0; color: var(--text-primary); text-shadow: 0 0 10px rgba(255,255,255,0.1); }
 .chart { grid-column: span 2; height: 260px; display: flex; flex-direction: column; }
-/* --- CORREÇÃO AQUI --- */
-/* Removemos a altura máxima para deixar o Chart.js controlar o tamanho dentro do container. */
-.chart canvas {
-    /* Esta área fica intencionalmente mais simples para melhor compatibilidade com Chart.js */
-}
+.chart canvas { /* Deixado intencionalmente em branco para compatibilidade com Chart.js */ }
 .live-log { grid-column: span 4; }
 #log-container { height: 150px; background-color: var(--bg-primary); border: 1px solid var(--border-color); font-family: Menlo, Monaco, 'Courier New', monospace; font-size: 0.85rem; padding: 12px; border-radius: var(--radius-s); overflow-y: auto; transition: background-color 0.3s ease, border-color 0.3s ease; }
 .log-entry.animate-in { animation: slideIn 0.3s ease-out; }
