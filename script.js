@@ -11,7 +11,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const kpis = { ticket: document.getElementById('kpi-ticket'), crossSells: document.getElementById('kpi-cross-sells') };
 
     // --- ESTADO INICIAL E VARIÁVEIS ---
-    const initialState = { sells: 132, ticket: 87.50, demandHistory: [18, 22, 19, 25, 28, 24], sentiment: [65, 25, 10] };
+    const initialState = {
+        sells: 132,
+        ticket: 87.50,
+        // --- CORREÇÃO AQUI: O array agora tem 8 posições, como os labels ---
+        demandHistory: [18, 22, 19, 25, 28, 24, null, null],
+        sentiment: [65, 25, 10]
+    };
     let currentState = JSON.parse(JSON.stringify(initialState));
     let simulationRunning = false;
     let demandChart, sentimentChart;
@@ -25,10 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.classList.add('dark-theme');
             localStorage.setItem('theme', 'dark');
         }
-        // Atualiza os gráficos para as novas cores do tema
         if (demandChart) {
             setupCharts();
-            resetarSimulacao(true); // Reseta silenciosamente para aplicar cores
+            resetarSimulacao(true);
         }
     }
 
@@ -51,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'line',
             data: {
                 labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom (IA)', 'Seg (IA)'],
-                datasets: [{ label: 'Vendas Históricas', data: initialState.demandHistory, borderColor: isDarkTheme ? 'rgba(142, 142, 147, 0.8)' : 'rgba(172, 172, 174, 1)', tension: 0.4, borderWidth: 2 }, 
+                datasets: [{ label: 'Vendas Históricas', data: currentState.demandHistory, borderColor: isDarkTheme ? 'rgba(142, 142, 147, 0.8)' : 'rgba(172, 172, 174, 1)', tension: 0.4, borderWidth: 2 }, 
                            { label: 'Previsão IA', data: [], borderColor: 'rgba(0, 122, 255, 1)', borderDash: [5, 5], tension: 0.4, borderWidth: 3, pointBackgroundColor: 'rgba(0, 122, 255, 1)', pointRadius: 4 }]
             },
             options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } } }
@@ -62,7 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'doughnut',
             data: {
                 labels: ['Positivo', 'Neutro', 'Negativo'],
-                datasets: [{ data: initialState.sentiment, backgroundColor: ['rgba(52, 199, 89, 0.8)', 'rgba(142, 142, 147, 0.8)', 'rgba(255, 59, 48, 0.8)'], borderColor: isDarkTheme ? '#1d1d1f' : '#ffffff', borderWidth: 4 }]
+                datasets: [{ data: currentState.sentiment, backgroundColor: ['rgba(52, 199, 89, 0.8)', 'rgba(142, 142, 147, 0.8)', 'rgba(255, 59, 48, 0.8)'], borderColor: isDarkTheme ? '#1d1d1f' : '#ffffff', borderWidth: 4 }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } } }
         });
@@ -102,7 +107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         simularBtn.style.background = "var(--orange-glow)";
         addToLog("Iniciando simulação...");
         setTimeout(() => { addToLog("Geofence: Cliente no corredor de massas."); islandController('show', { layout: 'compact', content: { icon: 'pin_drop', text: 'Corredor de Massas' } }); }, 1500);
-        setTimeout(() => { addToLog("IA: Lead de cross-sell (Queijo) gerado."); const lastHistoricalPoint = currentState.demandHistory[currentState.demandHistory.length - 1]; const forecastData = Array(currentState.demandHistory.length - 1).fill(null); forecastData.push(lastHistoricalPoint, 29, 27); demandChart.data.datasets[1].data = forecastData; demandChart.update(); }, 3500);
+        setTimeout(() => { addToLog("IA: Lead de cross-sell (Queijo) gerado."); const lastHistoricalPoint = currentState.demandHistory[5]; const forecastData = Array(5).fill(null); forecastData.push(lastHistoricalPoint, 29, 27); demandChart.data.datasets[1].data = forecastData; demandChart.update(); }, 3500);
         setTimeout(() => { addToLog("AÇÃO REQUERIDA: Escolha uma estratégia de oferta (Teste A/B)."); offersBadge.classList.remove('hidden'); islandController('show', { layout: 'expanded', isExpanded: true, content: { icon: 'rule', title: 'Decisão Estratégica', subtitle: 'Escolha a oferta para enviar' }, duration: 6000 }); offersList.innerHTML = `<div class="card-highlight"><div class="card-text"><span class="card-category">OPORTUNIDADE DE VENDA</span><h3>Cliente 'João' (ID: 4815) propenso a comprar Queijo.</h3><p class="ab-test-title">Qual oferta enviar?</p><div class="ab-test-buttons"><button id="ab-test-A" class="main-action-btn option-a">A: 30% OFF</button><button id="ab-test-B" class="main-action-btn option-b">B: Leve 2, Pague 1</button></div></div></div>`; document.getElementById('ab-test-A').addEventListener('click', () => executarOferta('A')); document.getElementById('ab-test-B').addEventListener('click', () => executarOferta('B')); document.querySelector('.tab-button[data-screen="offers"]').click(); }, 5500);
     }
     
@@ -136,7 +141,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- INICIALIZAÇÃO E FUNÇÕES AUXILIARES ---
     function animateKpi(element, endValue, isCurrency = false) { const startValue = parseFloat(element.textContent.replace('R$ ', '').replace(',', '.')) || 0; anime({ targets: { value: startValue }, value: endValue, round: isCurrency ? 100 : 1, easing: 'easeOutExpo', duration: 1000, update: function() { let displayValue = isCurrency ? `R$ ${(Math.round(this.targets[0].value) / 100).toFixed(2).replace('.', ',')}` : Math.round(this.targets[0].value); element.textContent = displayValue; } }); }
     function addToLog(message) { const entry = document.createElement('div'); entry.className = 'log-entry'; entry.textContent = `[${new Date().toLocaleTimeString('pt-BR')}] ${message}`; logContainer.appendChild(entry); entry.classList.add('animate-in'); logContainer.scrollTop = logContainer.scrollHeight; }
-    function islandController(action, { layout = 'compact', content = {}, isExpanded = false, duration = 3000 } = {}) { if (islandAnimation) islandAnimation.pause(); const timeline = anime.timeline({ easing: 'spring(1, 80, 10, 0)' }); if (action === 'show') { const targetLayout = islandLayouts[layout]; Object.values(islandLayouts).forEach(l => l.classList.remove('active')); targetLayout.classList.add('active'); if (layout === 'compact') { targetLayout.querySelector('.material-symbols-outlined').textContent = content.icon; targetLayout.querySelector('p').textContent = content.text; } else if (layout === 'expanded') { targetLayout.querySelector('.icon-wrapper .material-symbols-outlined').textContent = content.icon; targetLayout.querySelector('.text-wrapper .title').textContent = content.title; targetLayout.querySelector('.text-wrapper .subtitle').textContent = content.subtitle; } timeline.add({ targets: dynamicIsland, width: isExpanded ? 320 : 180, height: isExpanded ? 80 : 36 }).add({ targets: targetLayout, opacity: 1 }, '-=400'); if (duration > 0) setTimeout(() => islandController('hide'), duration); } else if (action === 'hide') { timeline.add({ targets: '.island-layout', opacity: 0, duration: 150 }).add({ targets: dynamicIsland, width: 125, height: 36 }); } islandAnimation = timeline; }
     
     simularBtn.addEventListener('click', () => { simulationRunning ? resetarSimulacao() : executarSimulacao(); });
     tabButtons.forEach(button => { button.addEventListener('click', () => { tabButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active'); document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active')); document.getElementById(`screen-${button.dataset.screen}`).classList.add('active'); if (button.dataset.screen === 'offers') offersBadge.classList.add('hidden'); }); });
