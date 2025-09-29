@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         if (option === 'A') {
             addToLog("RESULTADO: Cliente converteu com a Oferta A!");
-            
+
             // Lógica realista para o Ticket Médio
             const valorQueijo = 25.00;
             const receitaAdicional = valorQueijo * 0.70; // 30% de desconto
@@ -74,7 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function resetarSimulacao() { addToLog("--- Simulação Resetada ---"); simulationRunning = false; simularBtn.textContent = "▶ Iniciar Simulação"; simularBtn.style.background = "var(--blue-accent)"; currentState = JSON.parse(JSON.stringify(initialState)); kpis.crossSells.textContent = currentState.sells; kpis.ticket.textContent = `R$ ${currentState.ticket.toFixed(2).replace('.', ',')}`; setupCharts(); offersBadge.classList.add('hidden'); offersList.innerHTML = `<p class="empty-state">Suas ofertas personalizadas aparecerão aqui.</p>`; document.querySelector('.tab-button[data-screen="home"]').click(); islandController('hide'); }
     function animateKpi(element, endValue, isCurrency = false) { const startValue = parseFloat(element.textContent.replace('R$ ', '').replace(',', '.')) || 0; anime({ targets: { value: startValue }, value: endValue, round: isCurrency ? 100 : 1, easing: 'easeOutExpo', duration: 1000, update: function() { let displayValue = isCurrency ? `R$ ${(this.targets[0].value / 100).toFixed(2).replace('.', ',')}` : Math.round(this.targets[0].value); element.textContent = displayValue; } }); }
     function addToLog(message) { const entry = document.createElement('div'); entry.className = 'log-entry'; entry.textContent = `[${new Date().toLocaleTimeString('pt-BR')}] ${message}`; logContainer.appendChild(entry); entry.classList.add('animate-in'); logContainer.scrollTop = logContainer.scrollHeight; }
-    simularBtn.addEventListener('click', () => { simulationRunning ? resetarSimulacao() : executarOferta(); });
+    
+    // --- CORREÇÃO CRÍTICA AQUI ---
+    simularBtn.addEventListener('click', () => {
+        // A função correta a ser chamada é executarSimulacao
+        if (simulationRunning) {
+            resetarSimulacao();
+        } else {
+            executarSimulacao();
+        }
+    });
+
     tabButtons.forEach(button => { button.addEventListener('click', () => { tabButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active'); document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active')); document.getElementById(`screen-${button.dataset.screen}`).classList.add('active'); if (button.dataset.screen === 'offers') offersBadge.classList.add('hidden'); }); });
     anime.timeline({ easing: 'easeOutExpo' }).add({ targets: ['#phone-column', '#dashboard-column', '#footer'], translateY: [20, 0], opacity: [0, 1], duration: 800, delay: anime.stagger(200, {start: 200}) });
     setupCharts();
