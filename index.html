@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DataSpark 2.1 - Market Intelligence Platform</title>
+    <title>DataSpark 2.2 - Market Intelligence Platform</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
-<body>
+<body class="dark-theme">
 
     <header class="main-header">
         <div class="logo">
@@ -18,6 +18,11 @@
             <h1>DataSpark</h1>
         </div>
         <p>Market Intelligence Platform</p>
+        
+        <button id="theme-switcher" class="theme-switcher" aria-label="Mudar tema">
+            <span class="material-symbols-outlined icon-sun">light_mode</span>
+            <span class="material-symbols-outlined icon-moon">dark_mode</span>
+        </button>
     </header>
 
     <main class="demonstration-container">
@@ -29,16 +34,10 @@
                     <div class="iphone-screen-content">
                         <div class="dynamic-island-notch">
                             <div id="dynamic-island" class="dynamic-island">
-                                <div class="island-layout" id="island-compact">
-                                    <span class="material-symbols-outlined"></span><p></p>
-                                </div>
-                                <div class="island-layout" id="island-expanded">
-                                    <div class="icon-wrapper"><span class="material-symbols-outlined"></span></div>
-                                    <div class="text-wrapper"><p class="title"></p><p class="subtitle"></p></div>
-                                </div>
+                                <div class="island-layout" id="island-compact"><span class="material-symbols-outlined"></span><p></p></div>
+                                <div class="island-layout" id="island-expanded"><div class="icon-wrapper"><span class="material-symbols-outlined"></span></div><div class="text-wrapper"><p class="title"></p><p class="subtitle"></p></div></div>
                             </div>
                         </div>
-                        
                         <div class="app-screen">
                             <div id="screen-home" class="app-page active">
                                 <div class="app-header"><p class="date-indicator">QUINTA-FEIRA, 25 DE SETEMBRO</p><h1>Para Você</h1></div>
@@ -49,7 +48,6 @@
                             </div>
                             <div id="screen-offers" class="app-page"><div class="app-header"><h1>Minhas Ofertas</h1></div><div class="app-content" id="offers-list"><p class="empty-state">Suas ofertas personalizadas aparecerão aqui.</p></div></div>
                         </div>
-
                         <nav class="tab-bar">
                             <button class="tab-button active" data-screen="home"><span class="material-symbols-outlined">home</span><span>Início</span></button>
                             <button class="tab-button" data-screen="offers"><span class="material-symbols-outlined">sell</span><span>Ofertas</span> <span id="offers-badge" class="badge hidden"></span></button>
@@ -65,7 +63,7 @@
                 <div class="title-bar"><div class="traffic-lights"><div class="light red"></div><div class="light yellow"></div><div class="light green"></div></div><span class="window-title">Supermercado Fidelidade - Market Intelligence</span></div>
                 <div class="window-content">
                     <div class="dashboard-grid">
-                        <div class="dashboard-card kpi"><h4>Ticket Médio</h4><p id="kpi-ticket">R$ 87,50</p></div>
+                        <div class="dashboard-card kpi"><h4>Ticket Médio<span class="info-icon">?</span><div class="tooltip">O Ticket Médio é o valor médio gasto por cliente em cada compra. Nosso objetivo é aumentar esse número com ofertas inteligentes (cross-sell), gerando mais receita sem precisar de mais clientes.</div></h4><p id="kpi-ticket">R$ 87,50</p></div>
                         <div class="dashboard-card kpi"><h4>Cross-sells</h4><p id="kpi-cross-sells">132</p></div>
                         <div class="dashboard-card chart" id="demand-chart-container"><h4>Previsão de Demanda (Queijos)</h4><canvas id="demand-forecast-chart"></canvas></div>
                         <div class="dashboard-card chart" id="sentiment-chart-container"><h4>Análise de Sentimento (Fontes Externas)</h4><canvas id="sentiment-analysis-chart"></canvas></div>
