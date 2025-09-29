@@ -1,47 +1,25 @@
 /* --- Design System (Light Theme Only) --- */
 :root {
-    --bg-primary: #f5f5f7;
-    --bg-secondary: #ffffff;
-    --bg-macos-window: rgba(242, 242, 247, 0.85);
-    --text-primary: #1d1d1f;
-    --text-secondary: #6e6e73;
-    --border-color: rgba(0, 0, 0, 0.1);
+    --bg-primary: #f5f5f7; --bg-secondary: #ffffff; --bg-macos-window: rgba(242, 242, 247, 0.85);
+    --text-primary: #1d1d1f; --text-secondary: #6e6e73; --border-color: rgba(0, 0, 0, 0.1);
     --iphone-body-bg: radial-gradient(circle at 50% 50%, #BDE8FF, #D1D1D6, #F5F5F7 70%);
-    --blue-glow: #007aff;
-    --green-glow: #34c759;
-    --orange-glow: #ff9500;
-    --red-glow: #ff3b30;
-    --shadow-glow-blue: 0 0 20px rgba(0, 122, 255, 0.2);
-    --radius-l: 24px;
-    --radius-m: 16px;
-    --radius-s: 12px;
+    --blue-accent: #007aff; --green-accent: #34c759; --orange-accent: #ff9500; --red-accent: #ff3b30;
+    --shadow-blue-accent: 0 0 20px rgba(0, 122, 255, 0.2);
+    --radius-l: 24px; --radius-m: 16px; --radius-s: 12px;
 }
 
 /* --- Base & Layout --- */
 * { box-sizing: border-box; }
-body {
-    font-family: 'Inter', -apple-system, sans-serif;
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    margin: 0;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* --- Cabeçalho --- */
+body { font-family: 'Inter', -apple-system, sans-serif; background-color: var(--bg-primary); color: var(--text-primary); margin: 0; -webkit-font-smoothing: antialiased; }
 .main-header { padding: 20px 40px; position: relative; display: flex; justify-content: space-between; align-items: center; }
 .logo { display: flex; align-items: center; gap: 12px; }
-.logo .material-symbols-outlined { font-size: 2.5rem; color: var(--blue-glow); }
+.logo .material-symbols-outlined { font-size: 2.5rem; color: var(--blue-accent); }
 .main-header h1 { font-size: 1.8rem; margin: 0; font-weight: 600; }
-.main-header p { display: none; }
 .header-controls { display: flex; align-items: center; gap: 16px; }
 .presentation-link { background: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-secondary); text-decoration: none; padding: 10px 16px; border-radius: var(--radius-m); font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; }
-.presentation-link:hover { color: var(--text-primary); border-color: var(--blue-glow); }
-
-/* --- Layout Principal --- */
+.presentation-link:hover { color: var(--blue-accent); border-color: var(--blue-accent); box-shadow: var(--shadow-blue-accent); }
 .demonstration-container { display: flex; justify-content: center; gap: 60px; padding: 20px 40px; flex-wrap: wrap; align-items: flex-start; }
 .column-mvp .column-title { text-align: center; font-weight: 500; color: var(--text-secondary); margin: 0 0 24px; }
-
-/* --- iPhone Mockup --- */
 .iphone-mockup { width: 380px; height: 780px; background-color: var(--bg-secondary); border: 12px solid #1c1c1e; border-radius: 60px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); position: relative; transition: all 0.5s ease; }
 .iphone-mockup:hover { transform: scale(1.02) translateY(-5px); }
 .iphone-body { width: 100%; height: 100%; border-radius: 48px; overflow: hidden; background: var(--iphone-body-bg); }
@@ -51,7 +29,7 @@ body {
 .island-layout { display: none; align-items: center; gap: 8px; width: 100%; height: 100%; justify-content: center; position: absolute; opacity: 0; }
 .island-layout.active { display: flex; }
 #island-expanded { justify-content: flex-start; padding: 0 20px; }
-#island-expanded .icon-wrapper { font-size: 2rem; }
+#island-expanded .icon-wrapper { font-size: 2rem; color: var(--blue-accent); }
 #island-expanded .text-wrapper p { margin: 0; line-height: 1.2; }
 #island-expanded .text-wrapper .title { font-weight: bold; }
 #island-expanded .text-wrapper .subtitle { font-size: 0.8rem; color: #999; }
@@ -64,18 +42,14 @@ body {
 .app-header h1 { font-size: 2.2rem; margin: 0; font-weight: 700; color: var(--text-primary); }
 .app-content { padding: 10px 20px; }
 .card-highlight { background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 20px; margin-top: 20px; border-radius: var(--radius-l); border: 1px solid rgba(255, 255, 255, 0.2); box-shadow: 0 4px 12px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; }
-.card-text .card-category { font-size: 0.8rem; font-weight: 600; color: var(--blue-glow); }
+.card-text .card-category { font-size: 0.8rem; font-weight: 600; color: var(--blue-accent); }
 .card-text h3 { margin: 4px 0 0; font-weight: 600; }
 .card-icon { font-size: 2.5rem; color: var(--text-secondary); }
-
-/* --- Tab Bar --- */
 .tab-bar { position: absolute; bottom: 10px; left: 10px; right: 10px; display: flex; justify-content: space-around; padding: 8px 0 20px; background: rgba(242, 242, 247, 0.7); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border-top: 1px solid var(--border-color); border-radius: 0 0 var(--radius-l) var(--radius-l); }
-.tab-button { background: none; border: none; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); cursor: pointer; position: relative; gap: 2px; }
-.tab-button.active { color: var(--blue-glow); }
-.badge { background: var(--red-glow); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 0.75rem; font-weight: 500; display: flex; justify-content: center; align-items: center; position: absolute; top: -5px; right: 10px; border: 2px solid var(--bg-secondary); }
+.tab-button { background: none; border: none; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; color: var(--text-secondary); cursor: pointer; position: relative; gap: 2px; transition: color 0.2s ease; }
+.tab-button.active { color: var(--blue-accent); }
+.badge { background: var(--red-accent); color: white; border-radius: 50%; width: 20px; height: 20px; font-size: 0.75rem; font-weight: 500; display: flex; justify-content: center; align-items: center; position: absolute; top: -5px; right: 10px; border: 2px solid var(--bg-secondary); }
 .badge.hidden { display: none; }
-
-/* --- macOS Window Dashboard --- */
 .macos-window { width: 700px; background-color: var(--bg-macos-window); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border-radius: var(--radius-m); border: 1px solid var(--border-color); box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
 .title-bar { display: flex; align-items: center; padding: 12px; border-bottom: 1px solid var(--border-color); }
 .traffic-lights { display: flex; gap: 8px; margin-right: 12px; }
@@ -87,28 +61,24 @@ body {
 .dashboard-card { background: var(--bg-secondary); border-radius: var(--radius-s); padding: 16px; border: 1px solid var(--border-color); }
 .dashboard-card h4 { margin: 0 0 12px; font-weight: 500; color: var(--text-secondary); font-size: 0.9rem; }
 .kpi { grid-column: span 2; }
-.kpi p { font-size: 2.2rem; font-weight: 600; margin: 0; color: var(--text-primary); }
+.kpi p { font-size: 2.2rem; font-weight: 700; margin: 0; color: var(--blue-accent); } /* COR AZUL APLICADA */
 .chart { grid-column: span 2; height: 260px; display: flex; flex-direction: column; }
 .chart canvas { /* Intencionalmente em branco para Chart.js controlar */ }
 .live-log { grid-column: span 4; }
 #log-container { height: 150px; background-color: var(--bg-primary); border: 1px solid var(--border-color); font-family: Menlo, Monaco, 'Courier New', monospace; font-size: 0.85rem; padding: 12px; border-radius: var(--radius-s); overflow-y: auto; }
 .log-entry.animate-in { animation: slideIn 0.3s ease-out; }
 @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-
-/* --- Footer & Botão --- */
 .main-footer { text-align: center; padding: 40px; }
-#simular-btn { background: var(--blue-glow); color: white; border: none; padding: 16px 32px; font-size: 1.1rem; font-weight: 500; border-radius: var(--radius-m); cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-glow-blue); }
+#simular-btn { background: var(--blue-accent); color: white; border: none; padding: 16px 32px; font-size: 1.1rem; font-weight: 500; border-radius: var(--radius-m); cursor: pointer; transition: all 0.3s ease; box-shadow: var(--shadow-blue-accent); }
 #simular-btn:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 0 30px rgba(0, 122, 255, 0.5); }
 #simular-btn:disabled { background-color: var(--text-secondary); cursor: not-allowed; }
 .initial-hidden { opacity: 0; transform: translateY(20px); }
 .empty-state { text-align: center; padding: 40px 20px; color: var(--text-secondary); }
-.main-action-btn { background: var(--blue-glow); color: white; border: none; padding: 14px; width: 100%; font-size: 1rem; font-weight: 500; border-radius: var(--radius-s); margin-top: 10px; cursor: pointer; }
-
-/* --- Tooltip e Teste A/B --- */
+.main-action-btn { background: var(--blue-accent); color: white; border: none; padding: 14px; width: 100%; font-size: 1rem; font-weight: 500; border-radius: var(--radius-s); margin-top: 10px; cursor: pointer; }
 .dashboard-card h4 { position: relative; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .info-icon { display: inline-block; width: 18px; height: 18px; border-radius: 50%; background-color: var(--text-secondary); color: var(--bg-secondary); font-size: 12px; font-weight: bold; text-align: center; line-height: 18px; cursor: help; }
 .tooltip { position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); background-color: var(--bg-secondary); color: var(--text-primary); padding: 12px; border-radius: var(--radius-s); border: 1px solid var(--border-color); width: 250px; text-align: left; font-size: 0.85rem; font-weight: 400; line-height: 1.4; z-index: 100; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.3s ease, visibility 0.3s ease; }
 .info-icon:hover + .tooltip { opacity: 1; visibility: visible; }
 .ab-test-title { font-size: 0.9rem; color: var(--text-secondary); margin-top: 20px; text-align: center; }
 .ab-test-buttons { display: flex; gap: 10px; margin-top: 10px; }
-.ab-test-buttons .option-b { background: var(--green-glow); }
+.ab-test-buttons .option-b { background: var(--green-accent); }
