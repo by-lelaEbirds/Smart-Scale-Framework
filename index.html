@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DataSpark - Market Intelligence Platform</title>
+    <title>DataSpark - Final Version</title>
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,35 +23,7 @@
     </header>
 
     <main class="demonstration-container">
-        <section class="column-mvp initial-hidden" id="phone-column">
-            <h2 class="column-title">Consumer App: "Cesta Certa"</h2>
-            <div class="iphone-mockup">
-                <div class="iphone-body">
-                    <div class="iphone-screen-content">
-                        <div class="dynamic-island-notch">
-                            <div id="dynamic-island" class="dynamic-island">
-                                <div class="island-layout" id="island-compact"><span class="material-symbols-outlined"></span><p></p></div>
-                                <div class="island-layout" id="island-expanded"><div class="icon-wrapper"><span class="material-symbols-outlined"></span></div><div class="text-wrapper"><p class="title"></p><p class="subtitle"></p></div></div>
-                            </div>
-                        </div>
-                        <div class="app-screen">
-                            <div id="screen-home" class="app-page active">
-                                <div class="app-header"><p class="date-indicator">QUINTA-FEIRA, 25 DE SETEMBRO</p><h1>Para Você</h1></div>
-                                <div class="app-content">
-                                    <div class="card-highlight"><div class="card-text"><span class="card-category">Sugestão da Semana</span><h3>Churrasco de Fim de Semana</h3></div><span class="material-symbols-outlined card-icon">outdoor_grill</span></div>
-                                    <div class="card-highlight"><div class="card-text"><span class="card-category">Sua Cesta Inteligente</span><h3>Itens que talvez você esqueceu</h3></div><span class="material-symbols-outlined card-icon">shopping_basket</span></div>
-                                </div>
-                            </div>
-                            <div id="screen-offers" class="app-page"><div class="app-header"><h1>Minhas Ofertas</h1></div><div class="app-content" id="offers-list"><p class="empty-state">Suas ofertas personalizadas aparecerão aqui.</p></div></div>
-                        </div>
-                        <nav class="tab-bar">
-                            <button class="tab-button active" data-screen="home"><span class="material-symbols-outlined">home</span><span>Início</span></button>
-                            <button class="tab-button" data-screen="offers"><span class="material-symbols-outlined">sell</span><span>Ofertas</span> <span id="offers-badge" class="badge hidden"></span></button>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <section class="column-mvp initial-hidden" id="phone-column"></section>
 
         <section class="column-mvp initial-hidden" id="dashboard-column">
             <h2 class="column-title">DataSpark B2B Platform</h2>
@@ -59,8 +31,14 @@
                 <div class="title-bar"><div class="traffic-lights"><div class="light red"></div><div class="light yellow"></div><div class="light green"></div></div><span class="window-title">Supermercado Fidelidade - Market Intelligence</span></div>
                 <div class="window-content">
                     <div class="dashboard-grid">
-                        <div class="dashboard-card kpi"><h4>Ticket Médio<span class="info-icon">?</span><div class="tooltip">O Ticket Médio é o valor gasto por cliente em cada compra. Nosso objetivo é aumentar esse número com ofertas inteligentes (cross-sell), gerando mais receita sem precisar de mais clientes.</div></h4><p id="kpi-ticket">R$ 87,50</p></div>
-                        <div class="dashboard-card kpi"><h4>Cross-sells<span class="info-icon">?</span><div class="tooltip">Cross-sells são vendas de produtos complementares sugeridos pela nossa IA (ex: vender queijo para quem comprou macarrão). Nosso objetivo é maximizar essa métrica, aumentando o valor de cada compra.</div></h4><p id="kpi-cross-sells">132</p></div>
+                        <div class="dashboard-card kpi">
+                            <h4>Ticket Médio (Hoje)<span class="info-icon">?</span><div class="tooltip">O Ticket Médio é o valor gasto por cliente em cada compra. Nosso objetivo é aumentar esse número com ofertas inteligentes (cross-sell), gerando mais receita sem precisar de mais clientes.</div></h4>
+                            <p id="kpi-ticket">R$ 87,50</p>
+                        </div>
+                        <div class="dashboard-card kpi">
+                            <h4>Cross-sells (Hoje)<span class="info-icon">?</span><div class="tooltip">Cross-sells são vendas de produtos complementares sugeridos pela nossa IA (ex: vender queijo para quem comprou macarrão). Nosso objetivo é maximizar essa métrica, aumentando o valor de cada compra.</div></h4>
+                            <p id="kpi-cross-sells">132</p>
+                        </div>
                         <div class="dashboard-card chart" id="demand-chart-container"><h4>Previsão de Demanda (Queijos)<span class="info-icon">?</span><div class="tooltip">Este gráfico usa dados históricos e um modelo de IA para prever a demanda futura. O objetivo é otimizar o estoque, evitando falta ou excesso de produtos nas prateleiras.</div></h4><canvas id="demand-forecast-chart"></canvas></div>
                         <div class="dashboard-card chart" id="sentiment-chart-container"><h4>Análise de Sentimento (Fontes Externas)<span class="info-icon">?</span><div class="tooltip">Coletamos e analisamos dados de fontes externas (redes sociais, notícias) para medir a percepção pública sobre produtos. O objetivo é identificar tendências e ajustar estratégias de marketing.</div></h4><canvas id="sentiment-analysis-chart"></canvas></div>
                         <div class="dashboard-card live-log"><h4>Log de Eventos em Tempo Real</h4><div id="log-container"></div></div>
