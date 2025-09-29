@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', () => {
-
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
@@ -8,11 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, {
-        threshold: 0.05
+        threshold: 0.1 // Aumentei um pouco para garantir a ativação
     });
 
     animatedElements.forEach(element => {
         observer.observe(element);
     });
-
 });
