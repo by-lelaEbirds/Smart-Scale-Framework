@@ -68,9 +68,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- CONTROLE DA ILHA DINÂMICA (sem alterações) ---
+    // --- CONTROLE DA ILHA DINÂMICA ---
     let islandAnimation;
-    function islandController(action, { layout = 'compact', content = {}, isExpanded = false, duration = 3000 } = {}) { /* ...código anterior... */ }
+    function islandController(action, { layout = 'compact', content = {}, isExpanded = false, duration = 3000 } = {}) {
+        if (islandAnimation) islandAnimation.pause();
+        const timeline = anime.timeline({ easing: 'spring(1, 80, 10, 0)' });
+        if (action === 'show') {
+            const targetLayout = islandLayouts[layout];
+            Object.values(islandLayouts).forEach(l => l.classList.remove('active'));
+            targetLayout.classList.add('active');
+            if (layout === 'compact') {
+                targetLayout.querySelector('.material-symbols-outlined').textContent = content.icon;
+                targetLayout.querySelector('p').textContent = content.text;
+            } else if (layout === 'expanded') {
+                targetLayout.querySelector('.icon-wrapper .material-symbols-outlined').textContent = content.icon;
+                targetLayout.querySelector('.text-wrapper .title').textContent = content.title;
+                targetLayout.querySelector('.text-wrapper .subtitle').textContent = content.subtitle;
+            }
+            timeline.add({ targets: dynamicIsland, width: isExpanded ? 320 : 180, height: isExpanded ? 80 : 36 })
+                    .add({ targets: targetLayout, opacity: 1 }, '-=400');
+            if (duration > 0) setTimeout(() => islandController('hide'), duration);
+        } else if (action === 'hide') {
+            timeline.add({ targets: '.island-layout', opacity: 0, duration: 150 })
+                    .add({ targets: dynamicIsland, width: 125, height: 36 });
+        }
+        islandAnimation = timeline;
+    }
 
     // --- LÓGICA DA SIMULAÇÃO E RESET ---
     function executarSimulacao() {
@@ -119,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
     tabButtons.forEach(button => { button.addEventListener('click', () => { tabButtons.forEach(btn => btn.classList.remove('active')); button.classList.add('active'); document.querySelectorAll('.app-page').forEach(page => page.classList.remove('active')); document.getElementById(`screen-${button.dataset.screen}`).classList.add('active'); if (button.dataset.screen === 'offers') offersBadge.classList.add('hidden'); }); });
     anime.timeline({ easing: 'easeOutExpo' }).add({ targets: ['#phone-column', '#dashboard-column', '#footer'], translateY: [20, 0], opacity: [0, 1], duration: 800, delay: anime.stagger(200, {start: 200}) });
     
-    // Aplica o tema salvo ao carregar a página
     const savedTheme = localStorage.getItem('theme') || 'dark';
     applyTheme(savedTheme);
 });
