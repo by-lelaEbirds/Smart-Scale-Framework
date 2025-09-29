@@ -11,29 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
     const kpis = { ticket: document.getElementById('kpi-ticket'), crossSells: document.getElementById('kpi-cross-sells') };
 
     // --- ESTADO INICIAL E VARIÁVEIS ---
-    const initialState = {
-        sells: 132,
-        ticket: 87.50,
-        // --- CORREÇÃO AQUI: O array agora tem 8 posições, como os labels ---
-        demandHistory: [18, 22, 19, 25, 28, 24, null, null],
-        sentiment: [65, 25, 10]
-    };
+    const initialState = { sells: 132, ticket: 87.50, demandHistory: [18, 22, 19, 25, 28, 24, null, null], sentiment: [65, 25, 10] };
     let currentState = JSON.parse(JSON.stringify(initialState));
     let simulationRunning = false;
     let demandChart, sentimentChart;
 
     // --- LÓGICA DO SELETOR DE TEMA ---
     function applyTheme(theme) {
-        if (theme === 'light') {
-            document.body.classList.remove('dark-theme');
-            localStorage.setItem('theme', 'light');
-        } else {
-            document.body.classList.add('dark-theme');
-            localStorage.setItem('theme', 'dark');
-        }
+        document.body.classList.toggle('dark-theme', theme === 'dark');
+        localStorage.setItem('theme', theme);
+        
+        // Apenas recria os gráficos. A simulação não precisa ser resetada aqui.
         if (demandChart) {
             setupCharts();
-            resetarSimulacao(true);
         }
     }
 
@@ -56,8 +46,24 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'line',
             data: {
                 labels: ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom (IA)', 'Seg (IA)'],
-                datasets: [{ label: 'Vendas Históricas', data: currentState.demandHistory, borderColor: isDarkTheme ? 'rgba(142, 142, 147, 0.8)' : 'rgba(172, 172, 174, 1)', tension: 0.4, borderWidth: 2 }, 
-                           { label: 'Previsão IA', data: [], borderColor: 'rgba(0, 122, 255, 1)', borderDash: [5, 5], tension: 0.4, borderWidth: 3, pointBackgroundColor: 'rgba(0, 122, 255, 1)', pointRadius: 4 }]
+                datasets: [
+                    { 
+                        label: 'Vendas Históricas', 
+                        data: currentState.demandHistory, // Usa o estado ATUAL
+                        borderColor: isDarkTheme ? 'rgba(142, 142, 147, 0.8)' : 'rgba(172, 172, 174, 1)', 
+                        tension: 0.4, 
+                        borderWidth: 2 
+                    }, 
+                    { 
+                        label: 'Previsão IA', 
+                        data: simulationRunning ? demandChart.data.datasets[1].data : [], // Mantém a previsão se a simulação estiver ativa
+                        borderColor: 'rgba(0, 122, 255, 1)', 
+                        borderDash: [5, 5], 
+                        tension: 0.4, 
+                        borderWidth: 3, 
+                        pointBackgroundColor: 'rgba(0, 122, 255, 1)', 
+                        pointRadius: 4 
+                    }]
             },
             options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } }, plugins: { legend: { display: false } } }
         });
@@ -67,7 +73,12 @@ document.addEventListener('DOMContentLoaded', () => {
             type: 'doughnut',
             data: {
                 labels: ['Positivo', 'Neutro', 'Negativo'],
-                datasets: [{ data: currentState.sentiment, backgroundColor: ['rgba(52, 199, 89, 0.8)', 'rgba(142, 142, 147, 0.8)', 'rgba(255, 59, 48, 0.8)'], borderColor: isDarkTheme ? '#1d1d1f' : '#ffffff', borderWidth: 4 }]
+                datasets: [{ 
+                    data: currentState.sentiment, // Usa o estado ATUAL
+                    backgroundColor: ['rgba(52, 199, 89, 0.8)', 'rgba(142, 142, 147, 0.8)', 'rgba(255, 59, 48, 0.8)'], 
+                    borderColor: isDarkTheme ? '#1d1d1f' : '#ffffff', 
+                    borderWidth: 4 
+                }]
             },
             options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } } }
         });
@@ -122,8 +133,8 @@ document.addEventListener('DOMContentLoaded', () => {
         offersList.innerHTML = `<p class="empty-state">Aguardando próxima oportunidade...</p>`;
     }
     
-    function resetarSimulacao(silent = false) {
-        if (!silent) addToLog("--- Simulação Resetada ---");
+    function resetarSimulacao() {
+        addToLog("--- Simulação Resetada ---");
         simulationRunning = false;
         simularBtn.textContent = "▶ Iniciar Simulação";
         simularBtn.style.background = "var(--blue-glow)";
@@ -147,5 +158,6 @@ document.addEventListener('DOMContentLoaded', () => {
     anime.timeline({ easing: 'easeOutExpo' }).add({ targets: ['#phone-column', '#dashboard-column', '#footer'], translateY: [20, 0], opacity: [0, 1], duration: 800, delay: anime.stagger(200, {start: 200}) });
     
     const savedTheme = localStorage.getItem('theme') || 'dark';
-    applyTheme(savedTheme);
+    document.body.classList.toggle('dark-theme', savedTheme === 'dark');
+    setupCharts();
 });
