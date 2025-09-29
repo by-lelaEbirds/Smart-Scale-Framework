@@ -1,43 +1,40 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- LÓGICA DA ANIMAÇÃO DE SCROLL (COM NOVAS FUNÇÕES) ---
+    // --- LÓGICA DA ANIMAÇÃO DE SCROLL ---
     const animatedElements = document.querySelectorAll('.animate-on-scroll');
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Remove a classe genérica e aplica animações específicas
                 const element = entry.target;
-                element.classList.add('is-visible');
+                const title = element.querySelector('.slide-title[data-effect=scramble]');
 
-                // Animação de Scramble para os títulos
-                const title = element.querySelector('.slide-title');
                 if (title && !title.classList.contains('has-animated')) {
                     title.classList.add('has-animated');
                     scrambleText(title);
                 }
                 
-                // Animação dos outros elementos (fade in normal)
-                const otherElements = element.querySelectorAll(':scope > *:not(.slide-title)');
-                otherElements.forEach(el => el.style.opacity = 1);
-
-                observer.unobserve(element); // Anima apenas uma vez
+                element.classList.add('is-visible');
+                observer.unobserve(element);
             }
         });
     }, { threshold: 0.2 });
+
     animatedElements.forEach(element => { observer.observe(element); });
 
-    // --- FUNÇÃO DA ANIMAÇÃO DE TEXTO SCRAMBLE ---
+    // --- FUNÇÃO DA ANIMAÇÃO DE TEXTO SCRAMBLE (AJUSTADA) ---
     function scrambleText(element) {
+        if (!element) return;
         const originalText = element.textContent;
-        const chars = '!<>-_\\/[]{}—=+*^?#________';
+        const chars = '!<>-_\\/[]{}—=+*^?#_';
         let frame = 0;
-        const frameRate = 2; // A cada 2 frames, atualiza uma letra
-        const totalFrames = originalText.length * frameRate * 2;
+        // --- AJUSTE AQUI: AUMENTADO PARA DEIXAR MAIS LENTO ---
+        const frameRate = 4; // A cada 4 frames, atualiza uma letra
+        const totalFrames = originalText.length * (frameRate + 5);
         element.style.opacity = 1;
 
         const animate = () => {
             let newText = '';
             for (let i = 0; i < originalText.length; i++) {
-                const progress = (frame - (i * frameRate)) / (frameRate * 2);
+                const progress = (frame - (i * (frameRate / 2))) / frameRate;
                 if (progress < 1 && progress > 0) {
                     const randomChar = chars[Math.floor(Math.random() * chars.length)];
                     newText += randomChar;
@@ -55,22 +52,29 @@ document.addEventListener('DOMContentLoaded', () => {
                 element.textContent = originalText;
             }
         };
-        animate();
+        setTimeout(animate, 100); // Pequeno delay para começar
     }
 
     // --- FUNÇÃO DO EFEITO 3D INTERATIVO NOS CARDS ---
-    const interactiveCards = document.querySelectorAll('.problem-cards .card, .criterion, .tier-card');
+    const interactiveCards = document.querySelectorAll('.problem-cards .card, .criterion, .tier-card, .flow-step');
     interactiveCards.forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
-            const rotateX = -y / 20; // Ajuste a sensibilidade
-            const rotateY = x / 20;
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.05)`;
+            const rotateX = -y / 25; // Sensibilidade ajustada
+            const rotateY = x / 25;
+            card.style.transform = `perspective(1500px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
         });
         card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            // Animação de retorno suave com anime.js
+            anime({
+                targets: card,
+                scale: 1,
+                rotateX: 0,
+                rotateY: 0,
+                easing: 'spring(1, 80, 10, 0)'
+            });
         });
     });
 
